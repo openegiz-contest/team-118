@@ -31,3 +31,9 @@ builds it locally from a pinned upstream commit and never publishes an image.
 Eclipse Ditto, Grafana, InfluxDB, Telegraf, Eclipse Mosquitto and MongoDB
 container images are pulled from their publishers at install time and are
 covered by their own licenses.
+
+MineMind's application installs eclipse-paho/paho.mqtt.python 2.1.0 from PyPI
+at image build time. Its published package metadata declares
+EPL-2.0 OR BSD-3-Clause; the installed package retains its upstream notices.
+The package source is not vendored into this repository:
+https://github.com/eclipse-paho/paho.mqtt.python

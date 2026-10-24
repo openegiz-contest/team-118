@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "checks": [
+    "18 Ditto twins, initial baseline and MQTT ingestion",
+    "delay propagates through acid inventory, lifecycle and product",
+    "runtime advance and commissioning at day 38",
+    "deterministic runtime rerun",
+    "equal cumulative supply at the common horizon",
+    "complete reset of all 18 physical twin states",
+    "runtime input validation",
+    "platform-dependent health and spatial UI assets"
+  ],
+  "count": 8
+}

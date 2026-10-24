@@ -19,6 +19,10 @@ examples/ar-lamp/https_server.log
 deploy/compose/.env
 # Set by `make example-mine`: compose commands then include the mine overlay
 deploy/compose/.example-mine
+deploy/compose/.inkai
+
+# Private artifact rendering and local verification output
+tmp/
 
 __pycache__/
 *.pyc

@@ -1,0 +1,31 @@
+Containers
+  ok    init job finished (policy + connections)
+  ok    all health-checked services healthy
+Ditto
+  ok    status/health is UP
+  ok    default policy exists
+  ok    connection mosquitto-source-connection open
+  ok    connection mosquitto-target-connection open
+  ok    create test twin
+Ditto memory
+  ok    policies: max heap 256 MiB leaves 512 MiB of its 768 MiB limit
+  ok    things: max heap 256 MiB leaves 512 MiB of its 768 MiB limit
+  ok    things-search: max heap 256 MiB leaves 512 MiB of its 768 MiB limit
+  ok    connectivity: max heap 384 MiB leaves 512 MiB of its 896 MiB limit
+  ok    gateway: max heap 256 MiB leaves 512 MiB of its 768 MiB limit
+Telemetry loop
+  ok    MQTT -> Ditto updated the twin
+  ok    twin event published without credentials
+  ok    Ditto -> Telegraf -> InfluxDB stored the value
+Grafana
+  ok    API healthy
+  ok    OpenEgiz app plugin enabled
+  ok    Unity panel plugin loaded
+  ok    InfluxDB datasource healthy
+  ok    OpenEgiz app reaches Ditto (plugin proxy)
+  ok    OpenEgiz app reaches the extended API (plugin proxy)
+Extended API and Unity
+  ok    extended API answers
+  ok    Unity file server serves build/
+
+Smoke test passed.

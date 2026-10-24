@@ -1,0 +1,22 @@
+services:
+  inkai:
+    build: ../../team/inkai
+    image: minemind/inkai:local
+    restart: unless-stopped
+    mem_limit: 192m
+    environment:
+      DITTO_URL: http://ditto-nginx:80
+      DITTO_PASSWORD: ${DITTO_PASSWORD}
+      MQTT_HOST: mosquitto
+      MQTT_PORT: "1883"
+    ports:
+      - "${OPENEGIZ_BIND:-127.0.0.1}:8088:8088"
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8088/health', timeout=45)"]
+      interval: 20s
+      timeout: 50s
+      retries: 5
+      start_period: 120s

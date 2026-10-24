@@ -9,7 +9,31 @@ COMPOSE_BASE := docker compose -f deploy/compose/docker-compose.yml
 # `make clean` forgets it.
 MINE_MARKER  := deploy/compose/.example-mine
 MINE_COMPOSE := examples/mine/compose.yml
-COMPOSE := $(COMPOSE_BASE)$(if $(wildcard $(MINE_MARKER)), -f $(MINE_COMPOSE))
+INKAI_MARKER := deploy/compose/.inkai
+INKAI_COMPOSE := team/inkai/compose.yml
+COMPOSE := $(COMPOSE_BASE)$(if $(wildcard $(MINE_MARKER)), -f $(MINE_COMPOSE))$(if $(wildcard $(INKAI_MARKER)), -f $(INKAI_COMPOSE))
+
+.PHONY: inkai inkai-test inkai-smoke
+
+## Start the MineMind submission and its required OpenEgiz platform
+inkai:
+	@bash scripts/compose-env.sh
+	@bash scripts/compose-preflight.sh
+	$(COMPOSE_BASE) -f $(INKAI_COMPOSE) up -d --build --wait --wait-timeout 900
+	@test "$$(docker wait $$($(COMPOSE_BASE) -f $(INKAI_COMPOSE) ps -a -q init))" = 0 || { \
+	  echo "ERROR: OpenEgiz initialization failed"; $(COMPOSE_BASE) -f $(INKAI_COMPOSE) logs init; exit 1; }
+	@bash scripts/compose-wait-ready.sh
+	@touch $(INKAI_MARKER)
+	@bash scripts/compose-urls.sh
+	@echo "MineMind: http://localhost:8088 (18 twins; MQTT -> Ditto -> spatial UI)"
+
+## Deterministic model tests; Python standard library only
+inkai-test:
+	python3 -m unittest discover -s team/inkai/tests -v
+
+## Running platform integration, scenario and reset checks
+inkai-smoke:
+	python3 -m team.inkai.integration_check
 
 ## Start the whole platform with Docker Compose (first run: generates credentials)
 up:
@@ -52,7 +76,7 @@ example-mine-stop:
 ## Stop the platform and DELETE all its data and credentials
 clean:
 	$(COMPOSE) down -v --remove-orphans
-	rm -f deploy/compose/.env $(MINE_MARKER)
+	rm -f deploy/compose/.env $(MINE_MARKER) $(INKAI_MARKER)
 
 # ---------------------------------------------------------------------------
 # Helm deployment (servers): the chart at the repository root

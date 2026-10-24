@@ -1,0 +1,29 @@
+{
+  "recorded_local_date": "2026-10-25",
+  "unit_tests": {
+    "status": "passed",
+    "count": 21,
+    "environments": [
+      "Windows Python",
+      "Ubuntu 24.04 WSL2 Python",
+      "Application image Python 3.12.12"
+    ]
+  },
+  "compose_configuration": {
+    "status": "passed"
+  },
+  "live_integration": {
+    "status": "passed",
+    "checks": 8
+  },
+  "platform_smoke": {
+    "status": "passed",
+    "checks": 23
+  },
+  "browser": {
+    "status": "pending"
+  },
+  "fresh_volume_start": {
+    "status": "pending"
+  }
+}

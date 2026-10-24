@@ -1,0 +1,36 @@
+{
+  "classification": "simulated deterministic example; not an Inkai forecast or calibration",
+  "delay_days": 28,
+  "view_day": 30,
+  "day30_baseline_t_u": 231.30081945186518,
+  "day30_delayed_t_u": 188.16,
+  "day90_product_difference_t_u": -61.66458982619306,
+  "equal_delivered_acid_at_day90": true,
+  "derived_drying_limit_kg_u_day": 8746.721296791007,
+  "commission_days": {
+    "mpp-b1": {
+      "baseline": 12,
+      "delayed": 38
+    },
+    "mpp-b2": {
+      "baseline": 25,
+      "delayed": 38
+    },
+    "sat1-b1": {
+      "baseline": 12,
+      "delayed": 38
+    },
+    "sat1-b2": {
+      "baseline": 25,
+      "delayed": 38
+    },
+    "sat2-b1": {
+      "baseline": 12,
+      "delayed": 38
+    },
+    "sat2-b2": {
+      "baseline": 25,
+      "delayed": 38
+    }
+  }
+}
