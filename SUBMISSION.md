@@ -4,17 +4,15 @@
 
 ## Concept
 
-<!-- Written by the Team before the code: your own choice, a few sentences per answer. Everything else in the Submission follows from it. -->
+**Enterprise:** This digital twin represents part of JV Inkai, an in-situ uranium recovery operation in Kazakhstan. It focuses on three areas: MPP, Sat-1 and Sat-2. It also includes the area ion-exchange plants and the limit of MPP drying and packaging.
 
-**Enterprise:** <!-- Which mining enterprise, or which part of it, the twin represents. -->
+**Users:** The main user is a wellfield production planner. This person plans when new blocks should receive acid and when they can start production. A production manager is a second user. They can use the twin to compare area production and possible curtailment. The model does not represent the internal logistics system of Kazatomprom.
 
-**Users:** <!-- Who uses the twin. -->
+**Decision:** If sulphuric acid arrives later than planned, how should the planner change the acidification and start dates of new blocks? When the delivery returns to normal, in which order can the delayed blocks start without going over the plant limits? The twin will compare a few clear policies. It will not claim to find the best possible or a proven operating plan.
 
-**Decision:** <!-- Which decision the twin helps them make. -->
+**Why this choice:** I have always been interested in Kazakhstan's large mineral resources. I want to use data science to study a real problem in this area. Kazatomprom reported that changes in acid delivery timing in 2024 delayed the acidification schedule of new Inkai blocks. This happened even though acid requirements were fulfilled at 106% for the first nine months. Cameco later reported 7.8 million pounds of U₃O₈ production for 2024, compared with a target of 8.3 million pounds. This makes delivery timing a useful problem to study with a digital twin. I want the model to show its assumptions and compare scenarios instead of showing simulated results as real operating facts.
 
-**Why this choice:** <!-- Why this enterprise, these users and this decision. -->
-
-**Real or fictional:** <!-- A real object: name it and give the sources of its numbers. A fictional one: which real objects it resembles and where its numbers come from. A real object with sourced numbers scores higher. -->
+**Real or fictional:** JV Inkai and its main operating details are real. This project is a representative simulation based on public sources. It is not a site-calibrated copy of Inkai. I will use public capacities and historical totals where available. Block group locations, individual block details, acid dose and duration, commissioning delays and production ramp-up are synthetic or assumed unless a source directly supports them. The map will be drawn for this project. It will not copy a published site figure.
 
 ## Team
 
