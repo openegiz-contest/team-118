@@ -51,7 +51,7 @@ This is **one scenario with baseline comparison**, not an optimizer or several p
 
 Implemented: deterministic model, related twin definitions, MQTT publisher, Ditto-only gateway, spatial UI, adjustable delay, baseline comparison, stock/lifecycle/product display, reset and automated checks.
 
-**Executed results and outstanding runtime checks:** `team/inkai/EVIDENCE.md`. Implementation alone does not establish Stand operation; claims are limited to recorded executed evidence.
+**Verified:** 21 unit tests, eight live Inkai integration checks, all 23 platform smoke checks and the full repository lint target passed. Browser checks covered the spatial view, delay, twin inspection, time controls and reset. The README startup commands succeeded from a clean source checkout with new credentials and empty project volumes, using cached images on Ubuntu WSL2. Exact KVM judge reproduction and real-world model validation remain unverified. Commands, logs, screenshots and limits: `team/inkai/EVIDENCE.md`.
 
 Not implemented: optimization, D1/D2 curtailment policies, outages, individual wells, chemistry/transport, company telemetry, uncertainty forecasting or site calibration. The original Example Mine remains upstream reference only.
 

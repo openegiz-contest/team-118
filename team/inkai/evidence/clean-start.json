@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "recorded_utc": "2026-10-24T21:16:24.828940+00:00",
+  "tested_commit": "152ad3bce01fdf6120ffd74a90e14e2a12e0b8e6",
+  "source_method": "Clean Git clone of a verified bundle of official Team-118 main; origin set to official repository URL",
+  "project": "minemind-clean",
+  "new_generated_credentials": true,
+  "project_volumes_empty_before_start": true,
+  "new_project_volumes": [
+    "minemind-clean_grafana-data",
+    "minemind-clean_grafana-plugins",
+    "minemind-clean_influxdb-config",
+    "minemind-clean_influxdb-data",
+    "minemind-clean_mongodb-data",
+    "minemind-clean_mosquitto-data"
+  ],
+  "original_development_volumes_preserved": [
+    "openegiz_grafana-data",
+    "openegiz_grafana-plugins",
+    "openegiz_influxdb-config",
+    "openegiz_influxdb-data",
+    "openegiz_mongodb-data",
+    "openegiz_mosquitto-data"
+  ],
+  "startup_seconds_with_cached_images": 120,
+  "cached_docker_images_reused": true,
+  "existing_ubuntu_install_reused": true,
+  "exact_kvm_judge_environment_verified": false,
+  "unit_tests": 21,
+  "live_integration_checks": 8,
+  "platform_smoke_checks": 23,
+  "telegraf_restarts_after_tests": 0
+}

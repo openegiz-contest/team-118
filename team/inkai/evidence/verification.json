@@ -21,9 +21,33 @@
     "checks": 23
   },
   "browser": {
-    "status": "pending"
+    "status": "passed",
+    "method": "Interactive Cua in-app browser observations and screenshots",
+    "checks": [
+      "day-30 baseline and 28-day delayed product/stock comparison",
+      "six new groups waiting for acid and delayed commissioning outlines",
+      "spatial twin selection and inspector",
+      "day-38 ramping",
+      "seven-day advance",
+      "play and pause daily progression",
+      "reset of day, delay, stocks and product",
+      "stale-state indication and recovery"
+    ],
+    "screenshots": [
+      "baseline-day30.png",
+      "delayed-day30.png",
+      "delayed-spatial.png"
+    ]
   },
   "fresh_volume_start": {
-    "status": "pending"
+    "status": "passed",
+    "tested_commit": "152ad3bce01fdf6120ffd74a90e14e2a12e0b8e6",
+    "startup_seconds_with_cached_images": 120,
+    "cached_docker_images_reused": true,
+    "exact_kvm_judge_environment_verified": false
+  },
+  "full_make_lint": {
+    "status": "passed",
+    "log": "lint.log"
   }
 }

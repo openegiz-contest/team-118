@@ -58,10 +58,9 @@ python3 -m team.inkai.report
 ```bash
 make ps
 docker compose -f deploy/compose/docker-compose.yml -f team/inkai/compose.yml logs --tail=100 inkai
-make down
 ```
 
-`make down` preserves volumes/credentials. `make inkai` starts again; application restart deliberately resets the scenario. Port 8088 and upstream ports must be free. Platform failure produces a stale-state/error indication, never standalone model results.
+To stop the Stand after use, run `make down`; it preserves volumes and credentials. `make inkai` starts again; application restart deliberately resets the scenario. Port 8088 and upstream ports must be free. Platform failure produces a stale-state/error indication, never standalone model results.
 
 Windows development uses Ubuntu 24.04 WSL2 with the checkout in Linux storage; see `OPENEGIZ.md`. When using Docker Engine inside WSL, keep the Ubuntu terminal/session open: systemd services alone [do not keep WSL alive](https://learn.microsoft.com/en-us/windows/wsl/systemd). Docker needs approximately 6 GiB available. The local WSL test machine is smaller than the judge's 16-GiB KVM environment; see the evidence record.
 

@@ -112,7 +112,15 @@ def main():
     text("A model outcome, not an Inkai loss estimate. Different assumptions or bottlenecks can change the difference.", 48, 83, size=15, color=MUTED)
     pdf.showPage()
 
-    page("Verification and reproduction", 6)
+    # Evidence image is an unmodified capture of our actual running Stand.
+    pdf.drawImage(str(Path(__file__).parent / "evidence/delayed-spatial.png"), 48, 32, width=864, height=486, preserveAspectRatio=True, anchor="c")
+    pdf.setFont("Helvetica", 10)
+    pdf.setFillColor(MUTED)
+    pdf.drawString(48, 15, "Actual Stand capture | Simulated day 30, delivery delay 28 days | Synthetic blocks and geometry")
+    pdf.drawRightString(WIDTH - 48, 15, "6")
+    pdf.showPage()
+
+    page("Verification and reproduction", 7)
     rows = [
         (f"{verification['unit_tests']['count']} unit tests (Windows + Ubuntu)", verification["unit_tests"]["status"]),
         ("Live MQTT / Ditto / scenario / reset", verification["live_integration"]["status"]),
