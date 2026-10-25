@@ -24,7 +24,7 @@ No company PDF, figure, map, third-party dataset or digitized historical chart i
 
 ## Synthetic inputs and assumptions
 
-Each area has one already-producing group B0 and two new groups B1/B2. These labels do not identify real Inkai wellfields. Each area's acid tank is separate; there is no cross-area transfer.
+Each area has one existing group B0 (ready at day 0, producing from day 1) and two new groups B1/B2. These labels do not identify real Inkai wellfields. Each area's acid tank is separate; there is no cross-area transfer.
 
 | Area | Initial commissioning acid (t) | Deliveries (t, days 3 / 60) | B1/B2 whole acid dose (t) | B0/B1/B2 nominal extraction (kg U/day) |
 |---|---:|---:|---:|---:|
@@ -32,7 +32,7 @@ Each area has one already-producing group B0 and two new groups B1/B2. These lab
 | Sat-1 | 80 | 300 / 120 | 100 / 130 | 2600 / 2000 / 2200 |
 | Sat-2 | 110 | 300 / 120 | 140 / 160 | 2000 / 1500 / 1700 |
 
-All values in this table are **synthetic**, chosen to exercise stock shortage, commissioning, IX throttling and drying backlog within a short demonstration. They are not inferred from site-wide acid-consumption totals.
+All values in this table are **synthetic**, chosen to exercise stock shortage, commissioning, IX throttling and bounded drying WIP within a short demonstration. They are not inferred from site-wide acid-consumption totals.
 
 - B1/B2 planned acidification starts: days 5/18. Whole acid dose is reserved at start; an insufficient tank defers the group. Within an area B1 is checked before B2, a fixed rule with no optimality claim.
 - Acidification: 7 whole days. Ramp: 1/7 nominal flow on commissioning day, increasing to full flow over 7 days. Both are **assumptions without Inkai-specific coefficients**.
@@ -41,6 +41,7 @@ All values in this table are **synthetic**, chosen to exercise stock shortage, c
 - Uranium head grade: constant synthetic 100 mg U/L. Initial recoverable model uranium per group: 180 times its nominal kg U/day. No claim that this is a real resource estimate or acid-leach recovery curve.
 - Plant rates are uniform daily limits obtained from annual demonstrated capacities. Proportional curtailment of all producing flows in an area enforces its IX limit. Commissioning itself is not postponed by IX capacity; flow is throttled afterward.
 - Recovered uranium from satellites is represented as an aggregate transfer to MPP. Individual loaded-resin/eluate transport, timing and chemistry are omitted. This is **not** the entire wellfield solution being pumped to the drying plant.
+- Shared drying and an **assumed one-day end-of-day WIP target** pace all areas proportionally after their IX limits. This policy allows recovered inflow up to today’s dryer throughput plus remaining WIP headroom. Nominal potential rates are unchanged; withheld potential extraction stays underground. There is no claim that the target describes Inkai storage geometry, an actual control policy, or a measured process residence time. Daily coordination is instantaneous in the model; hydraulic transients and transport/control lags are omitted.
 - The drying queue holds recovered elemental-U equivalents. No toll processing, transport delay or packaging-loss factor is added. A forecast deficit is a difference within this horizon, not uranium destroyed or a permanent site production loss.
 
 ## Derived quantities and accounting
@@ -55,9 +56,19 @@ For every daily step and every area:
 
 For each producing group, extraction demand is `nominal_rate * ramp`, bounded by remaining model uranium. In each area:
 
-`capacity_factor = min(1, IX_limit / (sum_extraction_demand * 0.98))`
+`IX_factor[area] = min(1, IX_limit / (sum_extraction_demand * 0.98))`
 
-`actual_extraction = demand * capacity_factor`
+`possible_recovered_U = sum(demand * IX_factor[area] * 0.98)`
+
+`WIP_target_U = drying_limit * assumed_WIP_target_days`
+
+`admitted_recovered_U = max(0, drying_limit + WIP_target_U - previous_end_of_day_WIP)`
+
+`drying_factor = min(1, admitted_recovered_U / possible_recovered_U)` (1 if no potential flow)
+
+`actual_extraction = demand * IX_factor[area] * drying_factor`
+
+Daily balances process incoming material before recording day-end WIP; instantaneous tank fill is not modelled. End-of-day WIP is asserted nonnegative and no larger than the target. Potential extraction minus actual extraction is a daily curtailment measure, not a unique resource or permanent loss.
 
 `solution_m3/day = extracted_kg_U/day / (100 mg/L * 0.001)`
 
@@ -73,4 +84,18 @@ All lifecycle states, stocks, flows, commissioning dates, product totals, differ
 
 The multi-series projection is serialized as a JSON string in the scenario twin's `state` feature. The UI parses that string received from Ditto. This preserves the complete projection without Telegraf's `json_v2` expanding multiple arrays into a very large metric set. Scalar live state remains structured JSON.
 
-Reproduce the documented example with `python3 -m team.inkai.report`. Annual production accounting or internal mass conservation does not validate real short-term acidification behaviour. Assumption sensitivity, chemical transport, real wellfield schedules and operational validation remain outside the MVP.
+## Reproducible assumption sensitivity
+
+`python3 -m team.inkai.report --sensitivity` prints all 27 cases also carried in the scenario twin and displayed by the interface:
+
+- Commissioning doses ×0.75, ×1 and ×1.25.
+- Acidification durations 3, 7 and 14 days; the seven-day ramp is unchanged.
+- WIP targets 0, 1 and 7 days of drying capacity.
+
+These axes are illustrative perturbations, not sourced plausible ranges or a probability distribution. Each case runs its own baseline and delayed scenario with the same deterministic engine and conservation assertions. The visible 3×3 table holds WIP at the default one day; the summary covers all 27 cases. The grid uses simultaneous changes, not a fitted response surface.
+
+At delay 28, all grid cases have 3–6 late groups, but the day-90 product difference spans −61.66 to 0 t U. Lower doses let B1 start from initial stock, and binding processing capacity can hide the delayed B2 contribution. The result supports investigating commissioning risk; it does not support a robust estimate of uranium loss. Similar differences across acidification-duration cases arise from this exercise's common shifts and fixed bottleneck, not evidence that acidification duration never matters.
+
+The sensitivity result is serialized as a JSON string for the same telemetry-size reason as the projection. No new runtime dependencies or external services are used.
+
+Reproduce the documented example with `python3 -m team.inkai.report`. Annual production accounting or internal mass conservation does not validate real short-term acidification behaviour. Chemical transport, real wellfield schedules and operational validation remain outside the MVP. The 27-case assumption check is internal scenario analysis, not validation against observations.

@@ -1,53 +1,86 @@
 {
   "recorded_local_date": "2026-10-25",
+  "recorded_utc": "2026-10-25T16:36:08.943171+00:00",
+  "source": "Uncommitted local improvements based on 7db06b400d49f0dbfef53a29e1fea9810d8f93f2; runtime hashes in revision-manifest.json",
   "unit_tests": {
     "status": "passed",
-    "count": 21,
+    "count": 29,
+    "model_tests": 26,
+    "mocked_read_contract_tests": 3,
     "environments": [
       "Windows Python",
-      "Ubuntu 24.04 WSL2 Python",
-      "Application image Python 3.12.12"
+      "Ubuntu WSL2 Python via make inkai-test",
+      "Built application image Python 3.12.12"
     ]
   },
   "compose_configuration": {
-    "status": "passed"
+    "status": "passed",
+    "credentials": "Existing isolated-platform env file read-only; no credentials copied into repository"
   },
   "live_integration": {
     "status": "passed",
-    "checks": 8
+    "checks": 12,
+    "scope": "Current runtime in a fresh isolated full OpenEgiz stack with new credentials and empty volumes; actual MQTT and Ditto; no runtime source bind mount",
+    "log": "fresh-stack-application-integration.log"
   },
   "platform_smoke": {
     "status": "passed",
-    "checks": 23
+    "checks": 23,
+    "scope": "Current runtime fresh isolated full-stack acceptance",
+    "log": "fresh-stack-platform-smoke.log",
+    "historical_log": "platform-smoke.log"
   },
   "browser": {
     "status": "passed",
-    "method": "Interactive Cua in-app browser observations and screenshots",
+    "method": "Interactive CUA browser observations; not an automated browser suite",
+    "namespace": "org.minemind.inkai.preview20261025",
     "checks": [
-      "day-30 baseline and 28-day delayed product/stock comparison",
-      "six new groups waiting for acid and delayed commissioning outlines",
-      "spatial twin selection and inspector",
-      "day-38 ramping",
-      "seven-day advance",
-      "play and pause daily progression",
-      "reset of day, delay, stocks and product",
-      "stale-state indication and recovery"
+      "baseline preset at day 30 and operating causal chain",
+      "delay preset: 188.16 versus 231.30 t U, six waiting groups",
+      "representative spatial map and Sat-2 B1 inspector",
+      "day-38 ramping and advance to day 45",
+      "play advanced day 45 to 51; pause stopped playback (an in-flight step completed)",
+      "day-90 product 694.44 t U with bounded 8.75 t U WIP",
+      "27-case sensitivity and caveat rendered from Ditto",
+      "reset day/delay zero, existing groups ready, flows/product zero",
+      "baseline preset restored",
+      "browser captured warning/error log empty"
     ],
     "screenshots": [
       "baseline-day30.png",
       "delayed-day30.png",
-      "delayed-spatial.png"
+      "delayed-spatial.png",
+      "sensitivity.png"
     ]
   },
   "fresh_volume_start": {
     "status": "passed",
-    "tested_commit": "152ad3bce01fdf6120ffd74a90e14e2a12e0b8e6",
-    "startup_seconds_with_cached_images": 120,
+    "base_commit": "7db06b400d49f0dbfef53a29e1fea9810d8f93f2",
+    "tested_source": "Uncommitted revised runtime; source hashes in fresh-stack-acceptance.json",
+    "startup_seconds_with_cached_images": 83.6,
     "cached_docker_images_reused": true,
-    "exact_kvm_judge_environment_verified": false
+    "current_revision_fresh_stack_verified": true,
+    "cold_image_downloads_verified": false,
+    "exact_kvm_judge_environment_verified": false,
+    "record": "fresh-stack-acceptance.json"
   },
-  "full_make_lint": {
+  "static_checks": {
     "status": "passed",
-    "log": "lint.log"
+    "scope": "Individual checks; see static-checks.json for line-ending and temporary-file issues",
+    "full_make_lint_current_revision": false
+  },
+  "original_stand_preserved": true,
+  "commit_or_push_performed": false,
+  "fresh_stack_browser": {
+    "status": "passed",
+    "scope": "Isolated port 18088, actual interactive browser observations",
+    "observations": [
+      "baseline day 30: 231.30 t U",
+      "28-day delay: 188.16 t U, six waiting groups",
+      "day-90 projection difference: -61.66 t U",
+      "27-case sensitivity range: -61.66 to 0 t U",
+      "reset day 0: three ready and six planned groups; zero output",
+      "baseline day 30 restored"
+    ]
   }
 }

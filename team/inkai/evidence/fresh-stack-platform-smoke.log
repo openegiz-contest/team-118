@@ -1,0 +1,31 @@
+Containers
+  [32mok[0m    init job finished (policy + connections)
+  [32mok[0m    all health-checked services healthy
+Ditto
+  [32mok[0m    status/health is UP
+  [32mok[0m    default policy exists
+  [32mok[0m    connection mosquitto-source-connection open
+  [32mok[0m    connection mosquitto-target-connection open
+  [32mok[0m    create test twin
+Ditto memory
+  [32mok[0m    policies: max heap 256 MiB leaves 512 MiB of its 768 MiB limit
+  [32mok[0m    things: max heap 256 MiB leaves 512 MiB of its 768 MiB limit
+  [32mok[0m    things-search: max heap 256 MiB leaves 512 MiB of its 768 MiB limit
+  [32mok[0m    connectivity: max heap 384 MiB leaves 512 MiB of its 896 MiB limit
+  [32mok[0m    gateway: max heap 256 MiB leaves 512 MiB of its 768 MiB limit
+Telemetry loop
+  [32mok[0m    MQTT -> Ditto updated the twin
+  [32mok[0m    twin event published without credentials
+  [32mok[0m    Ditto -> Telegraf -> InfluxDB stored the value
+Grafana
+  [32mok[0m    API healthy
+  [32mok[0m    OpenEgiz app plugin enabled
+  [32mok[0m    Unity panel plugin loaded
+  [32mok[0m    InfluxDB datasource healthy
+  [32mok[0m    OpenEgiz app reaches Ditto (plugin proxy)
+  [32mok[0m    OpenEgiz app reaches the extended API (plugin proxy)
+Extended API and Unity
+  [32mok[0m    extended API answers
+  [32mok[0m    Unity file server serves build/
+
+Smoke test passed.

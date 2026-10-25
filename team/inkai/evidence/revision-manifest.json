@@ -1,0 +1,163 @@
+{
+  "recorded_utc": "2026-10-25T16:37:16.239824+00:00",
+  "base_commit": "7db06b400d49f0dbfef53a29e1fea9810d8f93f2",
+  "branch": "main",
+  "commit_or_push_performed": false,
+  "untracked_draft_preserved_sha256": "B3010E059924940DF05438EEF049663E242B8E0EF0CE455381BFD75892EBAC99",
+  "participant_motivation_unchanged": true,
+  "backup": "D:\\OpenEgiz Backups\\Team118-20261025-0344\\baseline-7db06b4.zip",
+  "backup_integrity": "passed",
+  "runtime_image_comparison": "runtime-image-hashes.json",
+  "changed_files": [
+    {
+      "path": ".helmignore",
+      "sha256": "1a92a86d485fe8f65a8410822afb4a5f585de0d0546cef6a0accc87892aabd3f"
+    },
+    {
+      "path": "README.md",
+      "sha256": "971e1230275224d527315bb3e39afe7ff22f25fbfb9f446237f59f06b7d14478"
+    },
+    {
+      "path": "SUBMISSION.md",
+      "sha256": "5d72dc3a5ee7ed97149c67a121ab7f69f9769f000173c909c98aa175cd45c8d6"
+    },
+    {
+      "path": "presentation.pdf",
+      "sha256": "370b06c47f8b091c3a3ba8ddc54942d4453f48bb3ecd26b11a247a01a1b6c89c"
+    },
+    {
+      "path": "team/inkai/EVIDENCE.md",
+      "sha256": "92f92d40bcf4ce9ab5aa4a70e59282382ced08383cc9b2ea0e299dfcaa2368fd"
+    },
+    {
+      "path": "team/inkai/PARAMETERS.md",
+      "sha256": "7e0eae82c445e2b6b7e452b73c5cd0a22bfa9edba66fc2b858bc4efc6cc7e72d"
+    },
+    {
+      "path": "team/inkai/build_presentation.py",
+      "sha256": "6bdeb3375d761d169fda59d75c7f26c7f174100691d12bd15ff8cd9143159fb8"
+    },
+    {
+      "path": "team/inkai/config.json",
+      "sha256": "a04bddb0b299a905edc407889770848b2b4fe6083b17fd79178078fb2f23c131"
+    },
+    {
+      "path": "team/inkai/evidence/baseline-day30.png",
+      "sha256": "6e5dd64fc61c18aab4c6ea9d716c1ad9cd21f78e663d31144719d380776a47dd"
+    },
+    {
+      "path": "team/inkai/evidence/before-after.json",
+      "sha256": "4c3e34f3f09c8e1a7a60f6f0dd69fb41d35ede94233141adfb23b76c1ccaadbe"
+    },
+    {
+      "path": "team/inkai/evidence/delayed-day30.png",
+      "sha256": "a7cc931f43cd77ea07255b3338ff1e57b613953077832ab90208cf2f87d7644a"
+    },
+    {
+      "path": "team/inkai/evidence/delayed-spatial.png",
+      "sha256": "daa2f4565dd28f9ec71a8be0cc2e0237932f3b5b1fbf29e5223abf96dbfc5ddc"
+    },
+    {
+      "path": "team/inkai/evidence/fresh-stack-acceptance.json",
+      "sha256": "acd371cb6a87455d4c38f82e51e68a8b77b1f6282ebd25c882915640a2be2ae9"
+    },
+    {
+      "path": "team/inkai/evidence/fresh-stack-application-integration.log",
+      "sha256": "9330ecf68dc6d9539bf5684c1ca43a0d3da398710873c314dd2406d9a91573fd"
+    },
+    {
+      "path": "team/inkai/evidence/fresh-stack-platform-smoke.log",
+      "sha256": "533690baa51234c0ea3b99683930e1d1a38a1ff306636e1b52869b6e3847b95f"
+    },
+    {
+      "path": "team/inkai/evidence/fresh-stack-startup.log",
+      "sha256": "ef89931ee9583f2eed026fb299479c7b2aeb174209681f579610452c13d9dc76"
+    },
+    {
+      "path": "team/inkai/evidence/image-build.log",
+      "sha256": "7e12d0a6f8651621133c937d0836ca8714caaacc707de61c143edf8dfbd9df6f"
+    },
+    {
+      "path": "team/inkai/evidence/integration-results.json",
+      "sha256": "8b34eef7190fa06ef653923650025a9cf2064222d4e7843219b87f2bc79ac797"
+    },
+    {
+      "path": "team/inkai/evidence/isolated-image-start.json",
+      "sha256": "cb50cde063b2d8d0ba4679c495a0bddf4a0f31398da727e9a66f01d9c95b683e"
+    },
+    {
+      "path": "team/inkai/evidence/lint.log",
+      "sha256": "ceb35519ca36fa084c40965df883f76937c86c87f13433ec35e3cbdea3a16f20"
+    },
+    {
+      "path": "team/inkai/evidence/model-results.json",
+      "sha256": "e158bae760b54c968ac2952094f5bdd44e8ce65485bb18863eb394702db0248d"
+    },
+    {
+      "path": "team/inkai/evidence/runtime-image-hashes.json",
+      "sha256": "2a76aec996e374ca55450b1ea9fcd459db3013e360394b3c5c747817bcb8fd15"
+    },
+    {
+      "path": "team/inkai/evidence/sensitivity-results.json",
+      "sha256": "c3bb71bcd1bd55ee236bf190cde9eac22067078d4ee9f7c72559c555150a4975"
+    },
+    {
+      "path": "team/inkai/evidence/sensitivity.png",
+      "sha256": "c152423563710557b976f188562b527c885ff95c35c8370f17d608527d71d6d5"
+    },
+    {
+      "path": "team/inkai/evidence/static-checks.json",
+      "sha256": "24a5c2a14ce4bec38f583b530be37078fcab3f7c52c1a20d18b671959ea3f0c4"
+    },
+    {
+      "path": "team/inkai/evidence/unit-tests-image.log",
+      "sha256": "7a8df300da224a4e9e9efe371fe86b43390665e0cad764e7afc16a352a377f47"
+    },
+    {
+      "path": "team/inkai/evidence/unit-tests-wsl.log",
+      "sha256": "5ffe28a73cc67b2146ab0aae99f81f03784a232e4e29e3973b78194d873ef5a8"
+    },
+    {
+      "path": "team/inkai/evidence/unit-tests.log",
+      "sha256": "383858d733d817375a964e655c19413398ff63e9944c27be1b9ed16fec89ac6e"
+    },
+    {
+      "path": "team/inkai/evidence/verification.json",
+      "sha256": "e574a5d28d2ea44776c4b7a1aa155b489c36a6943a1b321dc8a14ac64e575c66"
+    },
+    {
+      "path": "team/inkai/integration_check.py",
+      "sha256": "d39f6be3f41ac71f258a44046b672e79c049d6cfc9dda6af43a6e9469891f508"
+    },
+    {
+      "path": "team/inkai/model.py",
+      "sha256": "20d00fa39b4922d35ad5de5d011f9e71d616f01576eea9025c50361583cb4043"
+    },
+    {
+      "path": "team/inkai/report.py",
+      "sha256": "bdbd3e2a5093ddd9bffc3c21e84c956ffeab65b4f158ab687494ffb1fe3b4fd5"
+    },
+    {
+      "path": "team/inkai/server.py",
+      "sha256": "2158cb4ac99bbed6d0473a29905aa0e6ded16280dbc67e5b4e330d66ccfe54b2"
+    },
+    {
+      "path": "team/inkai/tests/test_model.py",
+      "sha256": "766c500caed672f7454350114d1c40cf215007d13a62144dc247b4f419551bfb"
+    },
+    {
+      "path": "team/inkai/web/app.js",
+      "sha256": "9dfe7a9a0585286154217561b7c4581f8335ed214992e76f1cfda0b4dc6ffcb9"
+    },
+    {
+      "path": "team/inkai/web/index.html",
+      "sha256": "362d1983d6d9127138a57a713564bcf8b14818fe1040f613a3a228963e0c4813"
+    },
+    {
+      "path": "team/inkai/web/style.css",
+      "sha256": "7898d458efd5364dedc8d7e8a0174775554d5ea2926d6f7aeabde94231f5d6bb"
+    }
+  ],
+  "fresh_full_stack_evidence": "fresh-stack-acceptance.json",
+  "post_acceptance_changes": "Only documentation, evidence and offline presentation builder/PDF; all 15 recorded runtime/config/UI/test files unchanged"
+}

@@ -2,7 +2,7 @@ import copy
 import json
 import unittest
 
-from team.inkai.model import comparison, daily_capacity, load_config, run, twin_definitions, twin_states
+from team.inkai.model import NAMESPACE, comparison, daily_capacity, load_config, run, sensitivity, twin_definitions, twin_states
 
 
 class AccountingTests(unittest.TestCase):
@@ -105,7 +105,7 @@ class AccountingTests(unittest.TestCase):
                 for child in value.values():
                     check(child)
         check(states)
-        scenario = states["org.minemind.inkai:scenario"]
+        scenario = states[f"{NAMESPACE}:scenario"]
         self.assertEqual(json.loads(scenario["projection"]), snapshot["projection"])
 
     def test_daily_capacity_conversion(self):
@@ -136,6 +136,92 @@ class AccountingTests(unittest.TestCase):
         self.assertEqual(state["product_kg_u"], state["projection"]["scenario_product_kg_u"][30])
         self.assertEqual(state["baseline_product_kg_u"], state["projection"]["baseline_product_kg_u"][30])
         self.assertTrue(state["projection"]["delivered_t_equal_at_horizon"])
+
+    def test_day_zero_is_an_initial_condition_not_a_producing_flow(self):
+        for bid in ("mpp-b0", "sat1-b0", "sat2-b0"):
+            self.assertEqual(self.base[0]["blocks"][bid]["state"], "ready")
+            self.assertEqual(self.base[0]["blocks"][bid]["extraction_kg_u_day"], 0)
+            self.assertEqual(self.base[1]["blocks"][bid]["state"], "producing")
+        self.assertEqual(self.base[0]["product_kg_u"], 0)
+
+    def test_wip_target_is_enforced_across_delays_and_targets(self):
+        for target in (0, 1, 7):
+            config = copy.deepcopy(self.config)
+            config["assumptions"]["wip_target_days"] = target
+            for delay in (0, 7, 28, 42):
+                for state in run(delay, config):
+                    self.assertGreaterEqual(state["pending_kg_u"], -1e-7)
+                    self.assertLessEqual(state["pending_kg_u"], state["wip_limit_kg_u"] + 1e-7)
+
+    def test_flow_pacing_matches_hand_calculated_two_day_case(self):
+        config = copy.deepcopy(self.config)
+        config["areas"] = [config["areas"][0]]
+        config["horizon_days"] = 2
+        config["plant_recovery"] = 1
+        config["drying_capacity_mlb_u3o8_year"] = 10 * 365 * 2.5998 / 1_000_000
+        config["areas"][0]["existing_kg_u_day"] = 20
+        config["areas"][0]["new_kg_u_day"] = [0, 0]
+        history = run(0, config)
+        # D1: extract 20, dry 10, carry 10. D2: admit only 10 more.
+        self.assertAlmostEqual(history[1]["product_kg_u"], 10)
+        self.assertAlmostEqual(history[1]["pending_kg_u"], 10)
+        self.assertAlmostEqual(history[2]["extracted_kg_u"], 30)
+        self.assertAlmostEqual(history[2]["product_kg_u"], 20)
+        self.assertAlmostEqual(history[2]["pending_kg_u"], 10)
+        self.assertAlmostEqual(history[2]["withheld_kg_u_day"], 10)
+        self.assertAlmostEqual(history[2]["blocks"]["mpp-b0"]["remaining_uranium_kg"], 3600 - 30)
+
+    def test_wip_drains_after_extraction_depletes(self):
+        config = copy.deepcopy(self.config)
+        config["areas"] = [config["areas"][0]]
+        config["horizon_days"] = 3
+        config["plant_recovery"] = 1
+        config["assumptions"]["uranium_inventory_days_at_nominal_rate"] = 1
+        config["drying_capacity_mlb_u3o8_year"] = 10 * 365 * 2.5998 / 1_000_000
+        config["areas"][0]["existing_kg_u_day"] = 20
+        config["areas"][0]["new_kg_u_day"] = [0, 0]
+        history = run(0, config)
+        self.assertAlmostEqual(history[1]["pending_kg_u"], 10)
+        self.assertAlmostEqual(history[2]["pending_kg_u"], 0)
+        self.assertAlmostEqual(history[2]["product_kg_u"], 20)
+        self.assertAlmostEqual(history[3]["drying_kg_u_day"], 0)
+
+    def test_lower_wip_retains_uranium_in_groups_without_erasing_it(self):
+        config = copy.deepcopy(self.config)
+        config["assumptions"]["wip_target_days"] = 0
+        low = run(0, config)[-1]
+        normal = self.base[-1]
+        self.assertAlmostEqual(low["product_kg_u"], normal["product_kg_u"], places=6)
+        self.assertLess(low["extracted_kg_u"], normal["extracted_kg_u"])
+        self.assertGreater(sum(b["remaining_uranium_kg"] for b in low["blocks"].values()),
+                           sum(b["remaining_uranium_kg"] for b in normal["blocks"].values()))
+
+    def test_sensitivity_center_reproduces_the_operating_case(self):
+        grid = sensitivity(28)
+        center = next(r for r in grid["rows"] if r["dose_multiplier"] == 1 and
+                      r["acidification_days"] == 7 and r["wip_target_days"] == 1)
+        self.assertEqual(grid["case_count"], 27)
+        self.assertAlmostEqual(center["product_delta_kg_u"], self.late[-1]["product_kg_u"] - self.base[-1]["product_kg_u"])
+        self.assertEqual(center["delayed_groups"], 6)
+        self.assertEqual(center["max_commission_delay_days"], 26)
+        for row in grid["rows"]:
+            self.assertLessEqual(row["final_wip_kg_u"], row["wip_limit_kg_u"] + 1e-7)
+
+    def test_sensitivity_exposes_capacity_masking_not_a_guaranteed_loss(self):
+        grid = sensitivity(28)
+        self.assertAlmostEqual(grid["max_product_delta_kg_u"], 0, places=6)
+        self.assertLess(grid["min_product_delta_kg_u"], -60_000)
+        self.assertEqual(grid["min_delayed_groups"], 3)
+        self.assertEqual(grid["max_delayed_groups"], 6)
+        self.assertTrue(all(abs(r["product_delta_kg_u"]) < 1e-7 for r in sensitivity(0)["rows"]))
+
+    def test_sensitivity_cache_and_ditto_string_roundtrip_are_isolated(self):
+        first = sensitivity(28)
+        first["rows"][0]["product_delta_kg_u"] = -999
+        self.assertNotEqual(sensitivity(28)["rows"][0]["product_delta_kg_u"], -999)
+        snapshot = comparison(28, 30)
+        wire = twin_states(snapshot)[f"{NAMESPACE}:scenario"]
+        self.assertEqual(json.loads(wire["sensitivity"]), snapshot["sensitivity"])
 
 
 if __name__ == "__main__":

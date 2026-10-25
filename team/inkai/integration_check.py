@@ -1,14 +1,14 @@
 """Run against the actual app and compare its Ditto-derived state with the model.
 
 This is an integration check, not a mock: failure to ingest MQTT cannot pass.
-It mutates the demonstration scenario and leaves it reset to baseline/day 0.
+It verifies a complete day-0 reset, then leaves the informative baseline day 30.
 """
 import json
 import os
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
-from .model import NAMESPACE, comparison, twin_states
+from .model import NAMESPACE, comparison, load_config, twin_states
 
 URL = os.environ.get("INKAI_URL", "http://localhost:8088").rstrip("/")
 
@@ -31,6 +31,12 @@ def expect(response, delay, day):
 
 def main():
     checks = []
+    first = request("/api/state")
+    # Refuse to mutate a different namespace, including a protected old Stand.
+    assert first["namespace"] == NAMESPACE, "Wrong namespace: refusing to change this Stand"
+    site = first["twins"][f"{NAMESPACE}:site"]["state"]
+    expect(first, site["delay_days"], site["day"])
+    checks.append("namespace guard and initial platform snapshot")
     initial = request("/api/control", {"action": "reset"})
     baseline_zero = expect(initial, 0, 0)
     checks.append("18 Ditto twins, initial baseline and MQTT ingestion")
@@ -48,6 +54,16 @@ def main():
     final = expect(request("/api/control", {"action": "configure", "day": 90}), 28, 90)
     assert json.loads(final[f"{NAMESPACE}:scenario"]["projection"])["delivered_t_equal_at_horizon"]
     checks.append("equal cumulative supply at the common horizon")
+    final_site = final[f"{NAMESPACE}:site"]
+    assert final_site["pending_kg_u"] <= final_site["wip_limit_kg_u"] + 1e-7
+    assert final_site["drying_factor"] < 1
+    assert final_site["withheld_kg_u_day"] > 0
+    checks.append("drying/WIP pacing reaches all platform states without unbounded stock")
+    grid = json.loads(final[f"{NAMESPACE}:scenario"]["sensitivity"])
+    assert grid["case_count"] == 27
+    assert abs(grid["max_product_delta_kg_u"]) < 1e-6
+    assert grid["min_delayed_groups"] == 3 and grid["max_delayed_groups"] == 6
+    checks.append("27 assumption cases arrive losslessly through MQTT and Ditto")
     reset = expect(request("/api/control", {"action": "reset"}), 0, 0)
     assert reset == baseline_zero
     assert expect(request("/api/state"), 0, 0) == baseline_zero
@@ -64,8 +80,10 @@ def main():
     assert health["status"] == "ok" and health["twins"] == 18
     with urlopen(URL, timeout=10) as response:
         html = response.read().decode()
-        assert 'id="map"' in html and 'id="reset"' in html and 'id="production-chart"' in html
+        assert all(f'id="{name}"' in html for name in ("map", "reset", "production-chart", "wip-chart", "sensitivity-grid", "causal-chain"))
     checks.append("platform-dependent health and spatial UI assets")
+    expect(request("/api/control", {"action": "configure", "day": load_config()["demo_day"], "delay_days": 0}), 0, 30)
+    checks.append("informative baseline day 30 restored after reset verification")
     print(json.dumps({"status": "passed", "checks": checks, "count": len(checks)}, indent=2))
 
 

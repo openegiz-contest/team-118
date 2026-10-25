@@ -72,7 +72,7 @@ class Platform:
         self.client.loop_start()
         if not self.connected.wait(30):
             raise RuntimeError("MQTT connection did not become ready")
-        self.update("reset", {})
+        self.update("configure", {"day": self.config["demo_day"], "delay_days": 0})
 
     def read(self):
         ids = ",".join(self.definitions)
@@ -89,7 +89,7 @@ class Platform:
         if set(states) != set(self.definitions):
             raise RuntimeError("Missing platform twins")
         return {"source": "Eclipse Ditto REST /api/2/things", "transport": "MQTT -> Ditto -> UI gateway",
-                "revision": self.revision, "twins": states}
+                "revision": self.revision, "namespace": NAMESPACE, "twins": states}
 
     def update(self, action, values):
         with self.lock:
@@ -114,7 +114,7 @@ class Platform:
                 name = tid.split(":", 1)[1]
                 message = {"topic": f"{NAMESPACE}/{name}/things/twin/commands/modify", "path": "/features",
                            "value": {"run": {"properties": {"revision": revision}}, "state": {"properties": payload}}}
-                info = self.client.publish("telemetry/inkai-" + name, json.dumps(message, allow_nan=False), qos=1)
+                info = self.client.publish(f"telemetry/{NAMESPACE}/{name}", json.dumps(message, allow_nan=False), qos=1)
                 info.wait_for_publish(timeout=10)
                 if not info.is_published():
                     raise RuntimeError("MQTT delivery was not acknowledged")

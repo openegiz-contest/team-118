@@ -1,17 +1,37 @@
 {
-  "shell_syntax": {
-    "status": "passed",
-    "files": 32
-  },
-  "python_ast": {
-    "status": "passed",
-    "files": 26
-  },
-  "full_make_lint": {
-    "status": "passed",
-    "helm": "3.19.0",
-    "shellcheck": "0.9.0",
-    "log": "lint.log",
-    "note": "Development tools installed after the successful clean Compose startup; not runtime dependencies."
-  }
+  "scope": "Current local revision; individual lint commands, not make lint; existing test credentials read-only; no compose-env execution",
+  "checks": [
+    {
+      "check": "Python AST",
+      "files": 26,
+      "status": "passed"
+    },
+    {
+      "check": "Shell syntax with Linux LF",
+      "files": 32,
+      "status": "passed"
+    },
+    {
+      "check": "Helm lint",
+      "status": "passed"
+    },
+    {
+      "check": "Helm template",
+      "status": "passed"
+    },
+    {
+      "check": "ShellCheck with Linux LF",
+      "status": "passed"
+    },
+    {
+      "check": "Combined platform/application Compose config",
+      "status": "passed"
+    }
+  ],
+  "javascript": "node --check passed on Windows",
+  "notes": [
+    "WSL git ls-files required exact-path per-command safe.directory; no global configuration changed.",
+    "Unchanged upstream shell files in Windows checkout have CRLF. Bash and ShellCheck tested LF-normalized text via stdin, matching a normal Linux checkout. No shell file was changed.",
+    "Initial Helm lint included an ignored local Git bundle in tmp/ and failed. Added tmp/ to .helmignore; rerun passed."
+  ]
 }

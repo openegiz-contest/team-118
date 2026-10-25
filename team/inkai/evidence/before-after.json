@@ -1,0 +1,21 @@
+{
+  "baseline_commit": "7db06b400d49f0dbfef53a29e1fea9810d8f93f2",
+  "classification": "Deterministic model comparison; not measured operating improvements or a historical fit",
+  "before": {
+    "day90_product_t_u": 756.1040972593245,
+    "day90_recovered_wip_t_u": 365.9930697577376,
+    "day90_cumulative_extracted_t_u": 1144.997109201083,
+    "day90_solution_m3_h": 6048.7223130623815,
+    "product_90day_annualized_mlb_u3o8": 7.972084363333323
+  },
+  "after": {
+    "day90_product_t_u": 756.1040972593245,
+    "day90_recovered_wip_t_u": 8.746721296791007,
+    "day90_cumulative_extracted_t_u": 780.4600189348122,
+    "day90_solution_m3_h": 3718.8440887716865,
+    "product_90day_annualized_mlb_u3o8": 7.972084363333323
+  },
+  "nominal_rates_and_commissioning_doses_changed": false,
+  "mechanism": "Assumed proportional upstream pacing against drying and one-day end-of-day WIP; withheld potential extraction stays underground",
+  "unchanged_day90_delay28_product_delta_t_u": -61.66458982619306
+}

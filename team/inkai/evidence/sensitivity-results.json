@@ -1,0 +1,295 @@
+{
+  "classification": "Illustrative assumption stress grid; not calibrated bounds or confidence intervals",
+  "case_count": 27,
+  "rows": [
+    {
+      "dose_multiplier": 0.75,
+      "acidification_days": 3,
+      "wip_target_days": 0,
+      "product_delta_kg_u": 0.0,
+      "delayed_groups": 3,
+      "max_commission_delay_days": 13,
+      "final_wip_kg_u": 0.0,
+      "wip_limit_kg_u": 0.0
+    },
+    {
+      "dose_multiplier": 0.75,
+      "acidification_days": 3,
+      "wip_target_days": 1,
+      "product_delta_kg_u": 0.0,
+      "delayed_groups": 3,
+      "max_commission_delay_days": 13,
+      "final_wip_kg_u": 8746.721296791007,
+      "wip_limit_kg_u": 8746.721296791007
+    },
+    {
+      "dose_multiplier": 0.75,
+      "acidification_days": 3,
+      "wip_target_days": 7,
+      "product_delta_kg_u": 0.0,
+      "delayed_groups": 3,
+      "max_commission_delay_days": 13,
+      "final_wip_kg_u": 61227.04907753705,
+      "wip_limit_kg_u": 61227.04907753705
+    },
+    {
+      "dose_multiplier": 0.75,
+      "acidification_days": 7,
+      "wip_target_days": 0,
+      "product_delta_kg_u": 0.0,
+      "delayed_groups": 3,
+      "max_commission_delay_days": 13,
+      "final_wip_kg_u": 0.0,
+      "wip_limit_kg_u": 0.0
+    },
+    {
+      "dose_multiplier": 0.75,
+      "acidification_days": 7,
+      "wip_target_days": 1,
+      "product_delta_kg_u": 0.0,
+      "delayed_groups": 3,
+      "max_commission_delay_days": 13,
+      "final_wip_kg_u": 8746.721296791007,
+      "wip_limit_kg_u": 8746.721296791007
+    },
+    {
+      "dose_multiplier": 0.75,
+      "acidification_days": 7,
+      "wip_target_days": 7,
+      "product_delta_kg_u": 0.0,
+      "delayed_groups": 3,
+      "max_commission_delay_days": 13,
+      "final_wip_kg_u": 61227.04907753705,
+      "wip_limit_kg_u": 61227.04907753705
+    },
+    {
+      "dose_multiplier": 0.75,
+      "acidification_days": 14,
+      "wip_target_days": 0,
+      "product_delta_kg_u": 0.0,
+      "delayed_groups": 3,
+      "max_commission_delay_days": 13,
+      "final_wip_kg_u": 0.0,
+      "wip_limit_kg_u": 0.0
+    },
+    {
+      "dose_multiplier": 0.75,
+      "acidification_days": 14,
+      "wip_target_days": 1,
+      "product_delta_kg_u": 0.0,
+      "delayed_groups": 3,
+      "max_commission_delay_days": 13,
+      "final_wip_kg_u": 8746.721296791007,
+      "wip_limit_kg_u": 8746.721296791007
+    },
+    {
+      "dose_multiplier": 0.75,
+      "acidification_days": 14,
+      "wip_target_days": 7,
+      "product_delta_kg_u": 0.0,
+      "delayed_groups": 3,
+      "max_commission_delay_days": 13,
+      "final_wip_kg_u": 61227.04907753705,
+      "wip_limit_kg_u": 61227.04907753705
+    },
+    {
+      "dose_multiplier": 1.0,
+      "acidification_days": 3,
+      "wip_target_days": 0,
+      "product_delta_kg_u": -61664.589826193056,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 0.0,
+      "wip_limit_kg_u": 0.0
+    },
+    {
+      "dose_multiplier": 1.0,
+      "acidification_days": 3,
+      "wip_target_days": 1,
+      "product_delta_kg_u": -61664.589826193056,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 8746.721296791007,
+      "wip_limit_kg_u": 8746.721296791007
+    },
+    {
+      "dose_multiplier": 1.0,
+      "acidification_days": 3,
+      "wip_target_days": 7,
+      "product_delta_kg_u": -61664.589826193056,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 61227.04907753705,
+      "wip_limit_kg_u": 61227.04907753705
+    },
+    {
+      "dose_multiplier": 1.0,
+      "acidification_days": 7,
+      "wip_target_days": 0,
+      "product_delta_kg_u": -61664.589826193056,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 0.0,
+      "wip_limit_kg_u": 0.0
+    },
+    {
+      "dose_multiplier": 1.0,
+      "acidification_days": 7,
+      "wip_target_days": 1,
+      "product_delta_kg_u": -61664.589826193056,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 8746.721296791007,
+      "wip_limit_kg_u": 8746.721296791007
+    },
+    {
+      "dose_multiplier": 1.0,
+      "acidification_days": 7,
+      "wip_target_days": 7,
+      "product_delta_kg_u": -61664.589826193056,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 61227.04907753705,
+      "wip_limit_kg_u": 61227.04907753705
+    },
+    {
+      "dose_multiplier": 1.0,
+      "acidification_days": 14,
+      "wip_target_days": 0,
+      "product_delta_kg_u": -61664.58982619317,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 0.0,
+      "wip_limit_kg_u": 0.0
+    },
+    {
+      "dose_multiplier": 1.0,
+      "acidification_days": 14,
+      "wip_target_days": 1,
+      "product_delta_kg_u": -61664.58982619317,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 8746.721296791007,
+      "wip_limit_kg_u": 8746.721296791007
+    },
+    {
+      "dose_multiplier": 1.0,
+      "acidification_days": 14,
+      "wip_target_days": 7,
+      "product_delta_kg_u": -61664.58982619317,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 61227.04907753705,
+      "wip_limit_kg_u": 61227.04907753705
+    },
+    {
+      "dose_multiplier": 1.25,
+      "acidification_days": 3,
+      "wip_target_days": 0,
+      "product_delta_kg_u": -61664.589826193056,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 0.0,
+      "wip_limit_kg_u": 0.0
+    },
+    {
+      "dose_multiplier": 1.25,
+      "acidification_days": 3,
+      "wip_target_days": 1,
+      "product_delta_kg_u": -61664.589826193056,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 8746.721296791007,
+      "wip_limit_kg_u": 8746.721296791007
+    },
+    {
+      "dose_multiplier": 1.25,
+      "acidification_days": 3,
+      "wip_target_days": 7,
+      "product_delta_kg_u": -61664.589826193056,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 61227.04907753705,
+      "wip_limit_kg_u": 61227.04907753705
+    },
+    {
+      "dose_multiplier": 1.25,
+      "acidification_days": 7,
+      "wip_target_days": 0,
+      "product_delta_kg_u": -61664.589826193056,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 0.0,
+      "wip_limit_kg_u": 0.0
+    },
+    {
+      "dose_multiplier": 1.25,
+      "acidification_days": 7,
+      "wip_target_days": 1,
+      "product_delta_kg_u": -61664.589826193056,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 8746.721296791007,
+      "wip_limit_kg_u": 8746.721296791007
+    },
+    {
+      "dose_multiplier": 1.25,
+      "acidification_days": 7,
+      "wip_target_days": 7,
+      "product_delta_kg_u": -61664.589826193056,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 61227.04907753705,
+      "wip_limit_kg_u": 61227.04907753705
+    },
+    {
+      "dose_multiplier": 1.25,
+      "acidification_days": 14,
+      "wip_target_days": 0,
+      "product_delta_kg_u": -61664.58982619317,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 0.0,
+      "wip_limit_kg_u": 0.0
+    },
+    {
+      "dose_multiplier": 1.25,
+      "acidification_days": 14,
+      "wip_target_days": 1,
+      "product_delta_kg_u": -61664.58982619317,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 8746.721296791007,
+      "wip_limit_kg_u": 8746.721296791007
+    },
+    {
+      "dose_multiplier": 1.25,
+      "acidification_days": 14,
+      "wip_target_days": 7,
+      "product_delta_kg_u": -61664.58982619317,
+      "delayed_groups": 6,
+      "max_commission_delay_days": 26,
+      "final_wip_kg_u": 61227.04907753705,
+      "wip_limit_kg_u": 61227.04907753705
+    }
+  ],
+  "dose_multipliers": [
+    0.75,
+    1.0,
+    1.25
+  ],
+  "acidification_days": [
+    3,
+    7,
+    14
+  ],
+  "wip_target_days": [
+    0,
+    1,
+    7
+  ],
+  "min_product_delta_kg_u": -61664.58982619317,
+  "max_product_delta_kg_u": 0.0,
+  "min_delayed_groups": 3,
+  "max_delayed_groups": 6
+}

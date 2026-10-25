@@ -1,5 +1,6 @@
 {
   "horizon_days": 90,
+  "demo_day": 30,
   "max_delay_days": 42,
   "plant_recovery": 0.98,
   "lb_u3o8_per_kg_u": 2.5998,
@@ -9,12 +10,14 @@
     "ramp_days": 7,
     "head_grade_mg_u_l": 100,
     "uranium_inventory_days_at_nominal_rate": 180,
-    "description": "Synthetic 90-day commissioning exercise, not a reconstruction of 2023 or 2024. Acid tanks cover new-block commissioning only. Existing production's acid supply is outside this boundary and assumed protected. Each new group reserves its whole assumed acid dose before a fixed acidification period. Producing flow is proportionally throttled at area IX capacity; recovered uranium queues at the shared drying limit. No toll milling is modelled."
+    "wip_target_days": 1,
+    "description": "Synthetic 90-day commissioning exercise, not a reconstruction of 2023 or 2024. Acid tanks cover commissioning only; sustaining acid is protected outside this boundary. Whole acid doses and fixed acidification/ramp durations are assumptions. Area IX limits and a shared drying/WIP pacing rule throttle actual extraction. One daily drying capacity of end-of-day WIP is an illustrative operating target, not a measured Inkai tank capacity. Excess potential flow stays underground. No toll milling is modelled."
   },
+  "sensitivity_grid": {"dose_multipliers": [0.75, 1.0, 1.25], "acidification_days": [3, 7, 14], "wip_target_days": [0, 1, 7]},
   "areas": [
-    {"id": "mpp", "label": "MPP", "ix_capacity_mlb_u3o8_year": 2.7, "initial_acid_t": 100, "delivery_t": 300, "second_delivery_t": 120, "existing_kg_u_day": 1800, "new_kg_u_day": [800, 900], "new_acid_t": [120, 150]},
-    {"id": "sat1", "label": "Sat-1", "ix_capacity_mlb_u3o8_year": 6.3, "initial_acid_t": 80, "delivery_t": 300, "second_delivery_t": 120, "existing_kg_u_day": 2600, "new_kg_u_day": [2000, 2200], "new_acid_t": [100, 130]},
-    {"id": "sat2", "label": "Sat-2", "ix_capacity_mlb_u3o8_year": 4.5, "initial_acid_t": 110, "delivery_t": 300, "second_delivery_t": 120, "existing_kg_u_day": 2000, "new_kg_u_day": [1500, 1700], "new_acid_t": [140, 160]}
+    {"id": "mpp", "label": "MPP", "map_x": 30, "map_y": 365, "ix_capacity_mlb_u3o8_year": 2.7, "initial_acid_t": 100, "delivery_t": 300, "second_delivery_t": 120, "existing_kg_u_day": 1800, "new_kg_u_day": [800, 900], "new_acid_t": [120, 150]},
+    {"id": "sat1", "label": "Sat-1", "map_x": 30, "map_y": 35, "ix_capacity_mlb_u3o8_year": 6.3, "initial_acid_t": 80, "delivery_t": 300, "second_delivery_t": 120, "existing_kg_u_day": 2600, "new_kg_u_day": [2000, 2200], "new_acid_t": [100, 130]},
+    {"id": "sat2", "label": "Sat-2", "map_x": 630, "map_y": 35, "ix_capacity_mlb_u3o8_year": 4.5, "initial_acid_t": 110, "delivery_t": 300, "second_delivery_t": 120, "existing_kg_u_day": 2000, "new_kg_u_day": [1500, 1700], "new_acid_t": [140, 160]}
   ],
   "delivery_days": [3, 60],
   "planned_acidification_days": [5, 18],

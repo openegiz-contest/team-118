@@ -7,6 +7,34 @@
   "day90_product_difference_t_u": -61.66458982619306,
   "equal_delivered_acid_at_day90": true,
   "derived_drying_limit_kg_u_day": 8746.721296791007,
+  "baseline_day90_wip_t_u": 8.746721296791007,
+  "assumed_wip_target_days": 1,
+  "baseline_day90_solution_m3_h": 3718.8440887716865,
+  "baseline_day90_extracted_t_u": 780.4600189348122,
+  "baseline_product_90day_annualized_mlb_u3o8": 7.972084363333323,
+  "sensitivity": {
+    "classification": "Illustrative assumption stress grid; not calibrated bounds or confidence intervals",
+    "case_count": 27,
+    "dose_multipliers": [
+      0.75,
+      1.0,
+      1.25
+    ],
+    "acidification_days": [
+      3,
+      7,
+      14
+    ],
+    "wip_target_days": [
+      0,
+      1,
+      7
+    ],
+    "min_product_delta_kg_u": -61664.58982619317,
+    "max_product_delta_kg_u": 0.0,
+    "min_delayed_groups": 3,
+    "max_delayed_groups": 6
+  },
   "commission_days": {
     "mpp-b1": {
       "baseline": 12,

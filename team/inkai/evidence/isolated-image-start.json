@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "image_id": "sha256:b9bd856a81e6356454ab8e4476fad56c0cf1c69bcdc12f89cad1f255227ffc3e",
+  "container": "minemind-inkai-verification",
+  "namespace": "org.minemind.inkai.verified20261025",
+  "source_bind_mounts": false,
+  "platform": "Shared existing minemind-clean platform; separate application and twins",
+  "application_ready_seconds": 3.62,
+  "live_check_groups": 12,
+  "image_unit_tests": 29,
+  "original_stand_snapshot_unchanged": true,
+  "original_stand_sha256": "c44f0f7164cc04fa82f71d3aadde6334202b3a9e5a73fbc02b6cc2b802c2c027",
+  "fresh_full_stack": false,
+  "exact_judge_kvm": false
+}

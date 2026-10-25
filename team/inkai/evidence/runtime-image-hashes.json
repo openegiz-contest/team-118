@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "image_id": "sha256:b9bd856a81e6356454ab8e4476fad56c0cf1c69bcdc12f89cad1f255227ffc3e",
+  "all_runtime_files_identical_to_working_tree": true,
+  "sha256": {
+    "config.json": "a04bddb0b299a905edc407889770848b2b4fe6083b17fd79178078fb2f23c131",
+    "model.py": "20d00fa39b4922d35ad5de5d011f9e71d616f01576eea9025c50361583cb4043",
+    "server.py": "2158cb4ac99bbed6d0473a29905aa0e6ded16280dbc67e5b4e330d66ccfe54b2",
+    "integration_check.py": "d39f6be3f41ac71f258a44046b672e79c049d6cfc9dda6af43a6e9469891f508",
+    "report.py": "bdbd3e2a5093ddd9bffc3c21e84c956ffeab65b4f158ab687494ffb1fe3b4fd5",
+    "Dockerfile": "065129b3358db149c2a35c96c10a1bf2ba89a64205e37ce7ff3ed3ec02a3e983",
+    "requirements.txt": "86373a1cba103ebb9c560f2d18bcf42559f01c9341edee7add4302dcdeb15e09",
+    "compose.yml": "dfe96db4c72af0b3d99ab92f3928e60b44f23e8a9b926b7b75e89967b6db902a",
+    "web/app.js": "9dfe7a9a0585286154217561b7c4581f8335ed214992e76f1cfda0b4dc6ffcb9",
+    "web/index.html": "362d1983d6d9127138a57a713564bcf8b14818fe1040f613a3a228963e0c4813",
+    "web/style.css": "7898d458efd5364dedc8d7e8a0174775554d5ea2926d6f7aeabde94231f5d6bb",
+    "tests/test_model.py": "766c500caed672f7454350114d1c40cf215007d13a62144dc247b4f419551bfb",
+    "tests/test_platform_contract.py": "7b4059726dc7368d32e4e211576f66edea88ca30da5b1e7febc7f161f30e0bbc"
+  }
+}

@@ -12,7 +12,7 @@ from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
 
-from .model import comparison, run
+from .model import comparison, run, sensitivity
 
 ROOT = Path(__file__).resolve().parents[2]
 WIDTH, HEIGHT = 960, 540
@@ -69,7 +69,7 @@ def main():
     text("Public facts", 48, 423, size=25, color=BLUE)
     text("MPP / Sat-1 / Sat-2 IX: 2.7 / 6.3 / 4.5 Mlb U3O8/year.<br/>Drying: 8.3 Mlb/year. Plant recovery: approximately 98%.", 48, 382, size=20)
     text("Synthetic exercise and assumptions", 48, 287, size=25, color=ORANGE)
-    text("Nine group identities, positions, stocks, rates and schedules.<br/>Whole commissioning doses: 100-160 t per new group.<br/>Seven-day acidification, seven-day ramp, fixed 100 mg U/L.<br/>Annual capacities converted to uniform daily model limits.", 48, 247, size=20)
+    text("Nine group identities, positions, stocks, rates and schedules.<br/>Whole commissioning doses: 100-160 t per new group.<br/>Seven-day acidification, seven-day ramp, fixed 100 mg U/L.<br/>Annual capacities converted to uniform daily model limits.<br/>One drying-capacity day of end-of-day WIP: an assumed policy.", 48, 247, size=20)
     text("The operator reported new-block acidification delays despite 106% nine-month acid fulfilment. This supports the timing mechanism, not these coefficients or a 28-day reconstruction.", 48, 105, size=15, color=MUTED)
     pdf.showPage()
 
@@ -77,8 +77,8 @@ def main():
     text("Acid stock = initial stock + deliveries - reserved doses", 48, 416, size=24)
     text("Extracted U = dried product U + queue U + unrecovered U", 48, 346, size=24)
     text("Initial group U = remaining U + cumulative extraction", 48, 276, size=24)
-    text("Area IX limits proportionally throttle extraction.<br/>Recovered uranium remains in the drying queue when packaging binds.<br/>The 2% unrecovered stream is recorded; uranium is not destroyed.", 48, 194, size=20)
-    text("Conservation tests establish internal consistency, not real-world operational validation.", 48, 82, size=16, color=MUTED)
+    text("Area IX limits plus drying/WIP headroom pace extraction.<br/>End-of-day recovered-U WIP stays at or below 8.75 t U.<br/>Capacity-withheld potential extraction stays underground.", 48, 194, size=20)
+    text("The WIP target is not a measured tank size. Conservation is internal consistency, not site validation.", 48, 82, size=16, color=MUTED)
     pdf.showPage()
 
     page("Simulated delivery-delay comparison", 5, "Generated from model.py/config.json by build_presentation.py; no observed block data or calibration")
@@ -116,26 +116,34 @@ def main():
     pdf.drawImage(str(Path(__file__).parent / "evidence/delayed-spatial.png"), 48, 32, width=864, height=486, preserveAspectRatio=True, anchor="c")
     pdf.setFont("Helvetica", 10)
     pdf.setFillColor(MUTED)
-    pdf.drawString(48, 15, "Actual Stand capture | Simulated day 30, delivery delay 28 days | Synthetic blocks and geometry")
+    pdf.drawString(48, 15, "Actual isolated Stand capture | Simulated day 30, delivery delay 28 days | Synthetic blocks and geometry")
     pdf.drawRightString(WIDTH - 48, 15, "6")
     pdf.showPage()
 
-    page("Verification and reproduction", 7)
-    rows = [
-        (f"{verification['unit_tests']['count']} unit tests (Windows + Ubuntu)", verification["unit_tests"]["status"]),
-        ("Live MQTT / Ditto / scenario / reset", verification["live_integration"]["status"]),
-        ("Original platform end-to-end smoke", verification["platform_smoke"]["status"]),
-        ("Browser spatial controls", verification["browser"]["status"]),
-        ("Fresh credentials and data-volume startup", verification["fresh_volume_start"]["status"]),
-    ]
-    y = 421
-    for title, status in rows:
-        text(title, 48, y, width=680, size=19)
-        text(status.upper(), 760, y, width=150, size=19, color=BLUE if status == "passed" else ORANGE)
-        y -= 36
-    text("Start: sudo apt-get update &amp;&amp; sudo apt-get install -y make<br/>make inkai-test &nbsp; | &nbsp; make inkai &nbsp; | &nbsp; make inkai-smoke", 48, 211, size=17)
-    text("Open localhost:8088. Reset -&gt; view day 30 -&gt; apply delay 28.<br/>Inspect day 38, then day 90. Reset baseline to undo completely.", 48, 142, size=18)
-    text("Local test: Ubuntu 24.04 WSL2 / Docker 29.1.3 / Compose 2.40.3 / about 7 GiB RAM.<br/>Fresh-volume testing reuses downloaded images. Exact 16-GiB KVM judge reproduction remains unverified.<br/>Detailed evidence, sources, assumptions and known limitations are committed alongside the code.", 48, 78, size=12, color=MUTED)
+    page("How robust is the conclusion?", 7)
+    grid = sensitivity(28)
+    text("27 cases: dose x0.75 / x1 / x1.25; acidification 3 / 7 / 14 days; WIP 0 / 1 / 7 days.", 48, 423, size=17)
+    text("Every delayed case uses its own no-delay baseline and the same accounting model.", 48, 389, size=17)
+    text("Day-90 product difference (t U), at a one-day WIP target", 48, 339, size=18, color=BLUE)
+    xs = [48, 330, 530, 730]
+    for x, heading in zip(xs, ["Dose multiplier", "3 days", "7 days", "14 days"]):
+        text(heading, x, 302, width=180, size=17)
+    for row, dose in enumerate(grid["dose_multipliers"]):
+        y = 263 - row * 37
+        text(f"{dose:.2f}x", xs[0], y, width=180, size=19)
+        for x, days in zip(xs[1:], grid["acidification_days"]):
+            cell = next(r for r in grid["rows"] if r["dose_multiplier"] == dose and r["acidification_days"] == days and r["wip_target_days"] == 1)
+            text(f"{cell['product_delta_kg_u']/1000:.2f}", x, y, width=180, size=19, color=ORANGE)
+    text(f"Across all cases: {grid['min_delayed_groups']}-{grid['max_delayed_groups']} new groups start late.<br/>A product shortfall is NOT robust across these assumptions.", 48, 145, size=22)
+    text("Illustrative perturbations, not measured bounds or confidence intervals. Lower assumed doses let B1 start from initial stock; capacity can mask B2 delays. No optimized policy or real loss estimate.", 48, 77, size=14, color=MUTED)
+    pdf.showPage()
+
+    page("Verification and reproduction", 8)
+    text(f"{verification['unit_tests']['count']} unit tests: 26 model + 3 mocked read-contract tests.<br/>{verification['live_integration']['checks']} live application groups + 23 platform smoke checks.<br/>Browser observations: spatial states, sensitivity, controls, reset.", 48, 421, size=21)
+    text("Evidence boundary", 48, 303, size=23, color=ORANGE)
+    text("Current runtime: fresh isolated full-stack WSL2 startup in 83.60 seconds.<br/>New credentials and empty volumes; cached images and build layers.<br/>Cold downloads and exact judge KVM remain unverified.", 48, 265, size=17)
+    text("Start on Ubuntu with Docker installed:<br/>sudo apt-get update &amp;&amp; sudo apt-get install -y make<br/>make inkai-test &amp;&amp; make inkai &amp;&amp; make inkai-smoke", 48, 176, size=17)
+    text("Open localhost:8088. Baseline day 30 -&gt; Delay 28 days -&gt; inspect days 38 / 90.<br/>Review sensitivity. Reset - day 0 restores every initial physical state.", 48, 88, size=16)
     pdf.showPage()
     pdf.save()
     print(output)

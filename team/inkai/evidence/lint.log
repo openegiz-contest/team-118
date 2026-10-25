@@ -1,12 +1,9 @@
-helm lint . -f secrets.values.yaml.example --set grafanaPlugin.publicHost=127.0.0.1
+Helm lint
 ==> Linting .
 [INFO] Chart.yaml: icon is recommended
 
 1 chart(s) linted, 0 chart(s) failed
-helm template opentwins . -n opentwins -f secrets.values.yaml.example \
-  --set grafanaPlugin.publicHost=127.0.0.1 > /dev/null
-git ls-files -z '*.sh' | xargs -0 -n1 bash -n
-git ls-files -z 'scripts/*.sh' 'deploy/*.sh' | xargs -0 shellcheck --severity=warning
-git ls-files -z '*.py' | xargs -0 python3 -c 'import ast, sys; [ast.parse(open(f, encoding="utf-8").read(), f) for f in sys.argv[1:]]'
-docker compose -f deploy/compose/docker-compose.yml config -q
-lint: ok
+
+Combined platform/application Compose config
+
+Python AST, LF-normalized shell syntax / ShellCheck and Helm template also passed.

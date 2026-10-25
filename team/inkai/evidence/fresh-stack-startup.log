@@ -1,0 +1,253 @@
+docker compose -p minemind-acceptance-20261025-final -f deploy/compose/docker-compose.yml -f team/inkai/compose.yml -f /home/minemind/team-118-acceptance-20261025-final/acceptance-override.yml up -d --build --wait --wait-timeout 900
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.33kB done
+#1 DONE 0.0s
+
+#2 [inkai internal] load build definition from Dockerfile
+#2 transferring dockerfile: 319B done
+#2 DONE 0.0s
+
+#3 [extended-api internal] load build definition from Dockerfile
+#3 transferring dockerfile: 188B 0.0s done
+#3 DONE 0.0s
+
+#4 [extended-api internal] load metadata for docker.io/library/node:20-slim
+#4 ...
+
+#5 [inkai internal] load metadata for docker.io/library/python:3.12.12-slim
+#5 DONE 1.9s
+
+#4 [extended-api internal] load metadata for docker.io/library/node:20-slim
+#4 DONE 1.9s
+
+#6 [extended-api internal] load git source https://github.com/ertis-research/extended-api-for-eclipse-ditto.git#b49663dea326854a2323423eaeab7e7f54d325a7
+#6 DONE 0.0s
+
+#7 [inkai internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [extended-api 1/5] FROM docker.io/library/node:20-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0
+#8 resolve docker.io/library/node:20-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0 0.0s done
+#8 DONE 0.0s
+
+#9 [extended-api 2/5] WORKDIR /usr/src/app
+#9 CACHED
+
+#10 [extended-api 4/5] RUN yarn install --frozen-lockfile
+#10 CACHED
+
+#11 [extended-api 3/5] COPY package*.json yarn.lock ./
+#11 CACHED
+
+#12 [extended-api 5/5] COPY . .
+#12 CACHED
+
+#13 [inkai 1/6] FROM docker.io/library/python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c
+#13 resolve docker.io/library/python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c 0.0s done
+#13 DONE 0.0s
+
+#14 [extended-api] exporting to image
+#14 exporting layers done
+#14 exporting manifest sha256:53dd611b7eae869bcc655be1f9bea574f9c70800308170e1d113a3e1ea8edb28 0.0s done
+#14 exporting config sha256:5f4030c466334be9ff447e6348dfdc31f058fd5b0946edcfdf4c3a957922ba15
+#14 ...
+
+#15 [inkai internal] load build context
+#15 transferring context: 581.89kB 0.1s done
+#15 DONE 0.1s
+
+#16 [inkai 2/6] WORKDIR /app
+#16 CACHED
+
+#17 [inkai 3/6] COPY requirements.txt .
+#17 CACHED
+
+#18 [inkai 4/6] RUN pip install --no-cache-dir -r requirements.txt
+#18 CACHED
+
+#19 [inkai 5/6] COPY . /app/inkai
+#19 DONE 0.1s
+
+#14 [extended-api] exporting to image
+#14 exporting config sha256:5f4030c466334be9ff447e6348dfdc31f058fd5b0946edcfdf4c3a957922ba15 0.0s done
+#14 exporting attestation manifest sha256:1b011300058121d892cdbf03f651c0a3217114820cce768a3370a58a91042f17
+#14 exporting attestation manifest sha256:1b011300058121d892cdbf03f651c0a3217114820cce768a3370a58a91042f17 0.1s done
+#14 exporting manifest list sha256:f04b6dd539710c68e341a0673bdd68057cca2ff9454db8180c1bb90727210ff0 0.0s done
+#14 naming to docker.io/openegiz/ditto-extended-api:local-b49663d 0.0s done
+#14 unpacking to docker.io/openegiz/ditto-extended-api:local-b49663d 0.0s done
+#14 DONE 0.3s
+
+#20 [inkai 6/6] RUN useradd --uid 10001 --create-home minemind
+#20 ...
+
+#21 [extended-api] resolving provenance for metadata file
+#21 DONE 0.0s
+
+#20 [inkai 6/6] RUN useradd --uid 10001 --create-home minemind
+#20 DONE 0.8s
+
+#22 [inkai] exporting to image
+#22 exporting layers 0.1s done
+#22 exporting manifest sha256:10264cf893d182d192dc1f54b2e9701ec0b84867a3051e3d1a2ff3d00e293bee 0.0s done
+#22 exporting config sha256:5b1575a48b585994e81221f146f904fa98171a1ee64f30e8de2d8ed567cf526f 0.0s done
+#22 exporting attestation manifest sha256:cc541c2e146aeba5e0d4b8b8b2e718792da05a2f5c3678f46029e43e705599aa 0.0s done
+#22 exporting manifest list sha256:d989075ebcaf6f2762dad162282c4df9b06113502295077a62c3fa28e2cc4c71 0.0s done
+#22 naming to docker.io/minemind/inkai:acceptance-20261025-final
+#22 naming to docker.io/minemind/inkai:acceptance-20261025-final done
+#22 unpacking to docker.io/minemind/inkai:acceptance-20261025-final 0.1s done
+#22 DONE 0.3s
+
+#23 [inkai] resolving provenance for metadata file
+#23 DONE 0.0s
+ minemind/inkai:acceptance-20261025-final  Built
+ openegiz/ditto-extended-api:local-b49663d  Built
+ Network minemind-acceptance-20261025-final_default  Creating
+ Network minemind-acceptance-20261025-final_default  Created
+ Volume minemind-acceptance-20261025-final_mongodb-data  Creating
+ Volume minemind-acceptance-20261025-final_mongodb-data  Created
+ Volume minemind-acceptance-20261025-final_influxdb-data  Creating
+ Volume minemind-acceptance-20261025-final_influxdb-data  Created
+ Volume minemind-acceptance-20261025-final_influxdb-config  Creating
+ Volume minemind-acceptance-20261025-final_influxdb-config  Created
+ Volume minemind-acceptance-20261025-final_grafana-data  Creating
+ Volume minemind-acceptance-20261025-final_grafana-data  Created
+ Volume minemind-acceptance-20261025-final_grafana-plugins  Creating
+ Volume minemind-acceptance-20261025-final_grafana-plugins  Created
+ Volume minemind-acceptance-20261025-final_mosquitto-data  Creating
+ Volume minemind-acceptance-20261025-final_mosquitto-data  Created
+ Container minemind-acceptance-20261025-final-mongodb-1  Creating
+ Container minemind-acceptance-20261025-final-influxdb-1  Creating
+ Container minemind-acceptance-20261025-final-grafana-plugins-1  Creating
+ Container minemind-acceptance-20261025-final-unity-1  Creating
+ Container minemind-acceptance-20261025-final-mosquitto-1  Creating
+ Container minemind-acceptance-20261025-final-influxdb-1  Created
+ Container minemind-acceptance-20261025-final-mosquitto-1  Created
+ Container minemind-acceptance-20261025-final-telegraf-1  Creating
+ Container minemind-acceptance-20261025-final-grafana-plugins-1  Created
+ Container minemind-acceptance-20261025-final-grafana-1  Creating
+ Container minemind-acceptance-20261025-final-mongodb-1  Created
+ Container minemind-acceptance-20261025-final-connectivity-1  Creating
+ Container minemind-acceptance-20261025-final-policies-1  Creating
+ Container minemind-acceptance-20261025-final-things-search-1  Creating
+ Container minemind-acceptance-20261025-final-things-1  Creating
+ Container minemind-acceptance-20261025-final-gateway-1  Creating
+ Container minemind-acceptance-20261025-final-unity-1  Created
+ Container minemind-acceptance-20261025-final-telegraf-1  Created
+ Container minemind-acceptance-20261025-final-things-search-1  Created
+ Container minemind-acceptance-20261025-final-connectivity-1  Created
+ Container minemind-acceptance-20261025-final-gateway-1  Created
+ Container minemind-acceptance-20261025-final-ditto-nginx-1  Creating
+ Container minemind-acceptance-20261025-final-grafana-1  Created
+ Container minemind-acceptance-20261025-final-policies-1  Created
+ Container minemind-acceptance-20261025-final-things-1  Created
+ Container minemind-acceptance-20261025-final-ditto-nginx-1  Created
+ Container minemind-acceptance-20261025-final-init-1  Creating
+ Container minemind-acceptance-20261025-final-extended-api-1  Creating
+ Container minemind-acceptance-20261025-final-init-1  Created
+ Container minemind-acceptance-20261025-final-inkai-1  Creating
+ Container minemind-acceptance-20261025-final-extended-api-1  Created
+ Container minemind-acceptance-20261025-final-inkai-1  Created
+ Container minemind-acceptance-20261025-final-mongodb-1  Starting
+ Container minemind-acceptance-20261025-final-unity-1  Starting
+ Container minemind-acceptance-20261025-final-mosquitto-1  Starting
+ Container minemind-acceptance-20261025-final-influxdb-1  Starting
+ Container minemind-acceptance-20261025-final-grafana-plugins-1  Starting
+ Container minemind-acceptance-20261025-final-unity-1  Started
+ Container minemind-acceptance-20261025-final-grafana-plugins-1  Started
+ Container minemind-acceptance-20261025-final-mosquitto-1  Started
+ Container minemind-acceptance-20261025-final-mongodb-1  Started
+ Container minemind-acceptance-20261025-final-mongodb-1  Waiting
+ Container minemind-acceptance-20261025-final-mongodb-1  Waiting
+ Container minemind-acceptance-20261025-final-mongodb-1  Waiting
+ Container minemind-acceptance-20261025-final-mongodb-1  Waiting
+ Container minemind-acceptance-20261025-final-mongodb-1  Waiting
+ Container minemind-acceptance-20261025-final-influxdb-1  Started
+ Container minemind-acceptance-20261025-final-influxdb-1  Waiting
+ Container minemind-acceptance-20261025-final-mosquitto-1  Waiting
+ Container minemind-acceptance-20261025-final-influxdb-1  Waiting
+ Container minemind-acceptance-20261025-final-grafana-plugins-1  Waiting
+ Container minemind-acceptance-20261025-final-grafana-plugins-1  Exited
+ Container minemind-acceptance-20261025-final-influxdb-1  Healthy
+ Container minemind-acceptance-20261025-final-influxdb-1  Healthy
+ Container minemind-acceptance-20261025-final-grafana-1  Starting
+ Container minemind-acceptance-20261025-final-grafana-1  Started
+ Container minemind-acceptance-20261025-final-mongodb-1  Healthy
+ Container minemind-acceptance-20261025-final-connectivity-1  Starting
+ Container minemind-acceptance-20261025-final-mongodb-1  Healthy
+ Container minemind-acceptance-20261025-final-policies-1  Starting
+ Container minemind-acceptance-20261025-final-mongodb-1  Healthy
+ Container minemind-acceptance-20261025-final-things-search-1  Starting
+ Container minemind-acceptance-20261025-final-mongodb-1  Healthy
+ Container minemind-acceptance-20261025-final-gateway-1  Starting
+ Container minemind-acceptance-20261025-final-mongodb-1  Healthy
+ Container minemind-acceptance-20261025-final-things-1  Starting
+ Container minemind-acceptance-20261025-final-policies-1  Started
+ Container minemind-acceptance-20261025-final-gateway-1  Started
+ Container minemind-acceptance-20261025-final-ditto-nginx-1  Starting
+ Container minemind-acceptance-20261025-final-connectivity-1  Started
+ Container minemind-acceptance-20261025-final-things-search-1  Started
+ Container minemind-acceptance-20261025-final-things-1  Started
+ Container minemind-acceptance-20261025-final-ditto-nginx-1  Started
+ Container minemind-acceptance-20261025-final-mongodb-1  Waiting
+ Container minemind-acceptance-20261025-final-mosquitto-1  Waiting
+ Container minemind-acceptance-20261025-final-ditto-nginx-1  Waiting
+ Container minemind-acceptance-20261025-final-mongodb-1  Healthy
+ Container minemind-acceptance-20261025-final-extended-api-1  Starting
+ Container minemind-acceptance-20261025-final-extended-api-1  Started
+ Container minemind-acceptance-20261025-final-mosquitto-1  Healthy
+ Container minemind-acceptance-20261025-final-telegraf-1  Starting
+ Container minemind-acceptance-20261025-final-mosquitto-1  Healthy
+ Container minemind-acceptance-20261025-final-telegraf-1  Started
+ Container minemind-acceptance-20261025-final-ditto-nginx-1  Healthy
+ Container minemind-acceptance-20261025-final-init-1  Starting
+ Container minemind-acceptance-20261025-final-init-1  Started
+ Container minemind-acceptance-20261025-final-init-1  Waiting
+ Container minemind-acceptance-20261025-final-init-1  Exited
+ Container minemind-acceptance-20261025-final-inkai-1  Starting
+ Container minemind-acceptance-20261025-final-inkai-1  Started
+ Container minemind-acceptance-20261025-final-telegraf-1  Waiting
+ Container minemind-acceptance-20261025-final-grafana-plugins-1  Waiting
+ Container minemind-acceptance-20261025-final-extended-api-1  Waiting
+ Container minemind-acceptance-20261025-final-gateway-1  Waiting
+ Container minemind-acceptance-20261025-final-policies-1  Waiting
+ Container minemind-acceptance-20261025-final-things-1  Waiting
+ Container minemind-acceptance-20261025-final-unity-1  Waiting
+ Container minemind-acceptance-20261025-final-mosquitto-1  Waiting
+ Container minemind-acceptance-20261025-final-inkai-1  Waiting
+ Container minemind-acceptance-20261025-final-ditto-nginx-1  Waiting
+ Container minemind-acceptance-20261025-final-things-search-1  Waiting
+ Container minemind-acceptance-20261025-final-grafana-1  Waiting
+ Container minemind-acceptance-20261025-final-init-1  Waiting
+ Container minemind-acceptance-20261025-final-mongodb-1  Waiting
+ Container minemind-acceptance-20261025-final-connectivity-1  Waiting
+ Container minemind-acceptance-20261025-final-influxdb-1  Waiting
+ Container minemind-acceptance-20261025-final-unity-1  Healthy
+ Container minemind-acceptance-20261025-final-grafana-1  Healthy
+ Container minemind-acceptance-20261025-final-init-1  Exited
+ Container minemind-acceptance-20261025-final-things-search-1  Healthy
+ Container minemind-acceptance-20261025-final-gateway-1  Healthy
+ Container minemind-acceptance-20261025-final-policies-1  Healthy
+ Container minemind-acceptance-20261025-final-grafana-plugins-1  Exited
+ Container minemind-acceptance-20261025-final-telegraf-1  Healthy
+ Container minemind-acceptance-20261025-final-connectivity-1  Healthy
+ Container minemind-acceptance-20261025-final-extended-api-1  Healthy
+ Container minemind-acceptance-20261025-final-mosquitto-1  Healthy
+ Container minemind-acceptance-20261025-final-ditto-nginx-1  Healthy
+ Container minemind-acceptance-20261025-final-things-1  Healthy
+ Container minemind-acceptance-20261025-final-mongodb-1  Healthy
+ Container minemind-acceptance-20261025-final-influxdb-1  Healthy
+ Container minemind-acceptance-20261025-final-inkai-1  Healthy
+Waiting for Ditto to serve requests ..... ready
+
+OpenEgiz is up.
+
+  Grafana        http://localhost:13000        admin / [REDACTED]
+  Ditto API      http://localhost:18080/api/2    ditto / [REDACTED]   (devops / [REDACTED])
+  Extended API   http://localhost:18085
+  InfluxDB       http://localhost:18086        admin / [REDACTED]
+  MQTT           tcp://localhost:11883
+  Unity WebGL    http://localhost:18090/build/<file>   (files from ./build/)
+
+Credentials live in deploy/compose/.env. Check everything with: make smoke
+MineMind: http://localhost:8088 (18 twins; MQTT -> Ditto -> spatial UI)

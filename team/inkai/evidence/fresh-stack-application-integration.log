@@ -1,0 +1,19 @@
+python3 -m team.inkai.integration_check
+{
+  "status": "passed",
+  "checks": [
+    "namespace guard and initial platform snapshot",
+    "18 Ditto twins, initial baseline and MQTT ingestion",
+    "delay propagates through acid inventory, lifecycle and product",
+    "runtime advance and commissioning at day 38",
+    "deterministic runtime rerun",
+    "equal cumulative supply at the common horizon",
+    "drying/WIP pacing reaches all platform states without unbounded stock",
+    "27 assumption cases arrive losslessly through MQTT and Ditto",
+    "complete reset of all 18 physical twin states",
+    "runtime input validation",
+    "platform-dependent health and spatial UI assets",
+    "informative baseline day 30 restored after reset verification"
+  ],
+  "count": 12
+}

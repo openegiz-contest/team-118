@@ -6,7 +6,7 @@
 
 **Users:** The main user is a wellfield production planner. This person plans when new blocks should receive acid and when they can start production. A production manager is a second user. They can use the twin to compare area production and possible curtailment. The model does not represent the internal logistics system of Kazatomprom.
 
-**Decision:** If sulphuric acid arrives later than planned, how should the planner change the acidification and start dates of new blocks? When the delivery returns to normal, in which order can the delayed blocks start without going over the plant limits? The twin will compare a few clear policies. It will not claim to find the best possible or a proven operating plan.
+**Decision:** If sulphuric acid arrives later than planned, how do the acidification and start dates of new blocks change, and what happens to production under the plant limits? The twin compares a baseline with an adjustable delivery delay, using a fixed start order. It does not claim to find the best possible or a proven operating plan.
 
 **Why this choice:** I have always been interested in Kazakhstan's large mineral resources. I want to use data science to study a real problem in this area. Kazatomprom reported that changes in acid delivery timing in 2024 delayed the acidification schedule of new Inkai blocks. This happened even though acid requirements were fulfilled at 106% for the first nine months. Cameco later reported 7.8 million pounds of U₃O₈ production for 2024, compared with a target of 8.3 million pounds. This makes delivery timing a useful problem to study with a digital twin. I want the model to show its assumptions and compare scenarios instead of showing simulated results as real operating facts.
 
@@ -29,13 +29,13 @@ One representative commissioning-delay exercise, with **18 Eclipse Ditto twins**
 | `site` | Aggregate stock, extraction, product, unrecovered uranium, drying queue and baseline difference. |
 | `mpp`, `sat1`, `sat2` | Area/IX: solution flow, recovered-U output, capacity/utilization; feed `packaging`. |
 | `acid-mpp`, `acid-sat1`, `acid-sat2` | Separate synthetic commissioning-only stocks, deliveries and reserved acid; supply their area's new groups. |
-| `mpp-b0`…`mpp-b2`, `sat1-b0`…`sat1-b2`, `sat2-b0`…`sat2-b2` | Nine synthetic groups: B0 already producing, B1/B2 new. Spatial position, lifecycle, acid dose/start, commissioning, extraction and remaining model uranium. |
-| `packaging` | Shared MPP drying limit, recovered-U queue and cumulative product. |
-| `scenario` | Applied delay/day, baseline/delayed projections and assumptions. |
+| `mpp-b0`…`mpp-b2`, `sat1-b0`…`sat1-b2`, `sat2-b0`…`sat2-b2` | Nine synthetic groups: B0 ready at day 0 and producing from day 1, B1/B2 new. Spatial position, lifecycle, acid dose/start, commissioning, extraction and remaining model uranium. |
+| `packaging` | Shared MPP drying limit, bounded recovered-U WIP, upstream flow-pacing factor and cumulative product. |
+| `scenario` | Applied delay/day, baseline/delayed product/acid/WIP projections, assumptions and 27-case sensitivity grid. |
 
 Definitions/relationships: `team/inkai/model.py::twin_definitions`; parameters: `team/inkai/config.json`. Spatial geometry is independently authored and synthetic.
 
-Data path: model → MQTT `telemetry/inkai-*` → platform MQTT source connection → Ditto `/features` → server-side Ditto REST reads → browser SVG/table/charts. `server.py` initializes twins with REST; **all runtime feature changes use MQTT**. All 18 twins must share one revision before a snapshot is served. There is no direct model-state fallback.
+Data path: model → MQTT `telemetry/org.minemind.inkai/<twin-name>` → platform MQTT source connection → Ditto `/features` → server-side Ditto REST reads → browser SVG/table/charts. `server.py` initializes twins with REST; **all runtime feature changes use MQTT**. All 18 twins must share one revision before a snapshot is served. There is no direct model-state fallback.
 
 Acid stock/commissioning is separate from uranium-bearing solution → area IX → aggregate recovered-U transfer → MPP drying queue. Satellite loaded-resin/eluate transport is omitted. Existing/sustaining-production acid supply is protected outside the commissioning boundary. No cross-area acid transfer is assumed.
 
@@ -43,17 +43,17 @@ Acid stock/commissioning is separate from uranium-bearing solution → area IX �
 
 | Scenario | What it does | How to see it on the Stand | How to undo |
 |---|---|---|---|
-| Acid-delivery timing and commissioning | Delay first deliveries by 0–42 days; second stays day 60. Changes stock, acidification/start dates, lifecycle, area flow, product and drying queue. Delivered totals agree at day 90. | Open `http://localhost:8088/`. Reset; view day 30; apply delay 28. New groups change from producing/ramping to waiting for acid; first arrival D3→D31. View day 38 for commissioning/ramping, day 90 for horizon comparison. Click twins for details. | **Reset baseline** restores day/delay 0, original deliveries/stocks, lifecycles, model uranium, product/queues/counters and projections. Transport revision changes; physical state matches day 0 exactly. |
+| Acid-delivery timing and commissioning | Delay first deliveries by 0–42 days; second stays day 60. Changes stock, acidification/start dates, lifecycle, area flow, product and drying queue. Delivered totals agree at day 90. | Open `http://localhost:8088/`. The default is baseline day 30. Click **Delay 28 days · compare**. New groups change from producing/ramping to waiting for acid; first arrival D3→D31. View day 38 for commissioning/ramping, day 90 for horizon comparison. Click twins for details. | **Reset · day 0** restores day/delay 0, original deliveries/stocks, lifecycles, model uranium, product/queues/counters and projections. Transport revision changes; physical state matches day 0 exactly. |
 
-This is **one scenario with baseline comparison**, not an optimizer or several policy modules. Runtime controls require no code changes. Applying delay recomputes a counterfactual from the same initial state. **View day**, **Advance 7 days**, and **Play days/Pause** expose the daily states.
+This is **one scenario with baseline comparison**, plus an assumption-sensitivity module, not an optimizer or several policy modules. The sensitivity module runs the same accounting model over 27 cases: doses ×0.75/1/1.25, acidification 3/7/14 days and WIP targets 0/1/7 days. Every delayed case is compared with its own baseline. Results pass through MQTT and Ditto into the interface. The grid is illustrative, not evidence-based coefficient bounds, confidence intervals or a recommended policy. Runtime controls require no code changes. Applying delay recomputes a counterfactual from the same initial state. **View day**, **Advance 7 days**, and **Play days/Pause** expose the daily states.
 
 ## What works and what does not
 
-Implemented: deterministic model, related twin definitions, MQTT publisher, Ditto-only gateway, spatial UI, adjustable delay, baseline comparison, stock/lifecycle/product display, reset and automated checks.
+Implemented: deterministic model, related twin definitions, MQTT publisher, Ditto-only gateway, spatial UI, adjustable delay, baseline comparison, stock/lifecycle/product display, bounded WIP and upstream pacing, the 27-case sensitivity module, complete reset and automated checks.
 
-**Verified:** 21 unit tests, eight live Inkai integration checks, all 23 platform smoke checks and the full repository lint target passed. Browser checks covered the spatial view, delay, twin inspection, time controls and reset. The README startup commands succeeded from a clean source checkout with new credentials and empty project volumes, using cached images on Ubuntu WSL2. Exact KVM judge reproduction and real-world model validation remain unverified. Commands, logs, screenshots and limits: `team/inkai/EVIDENCE.md`.
+**Verification:** The revised runtime passed a fresh full-stack Ubuntu WSL2 startup in 83.60 seconds with new credentials, isolated empty volumes and cached images/build layers. That run passed 29 unit tests (26 model tests and three mocked read-contract tests), 12 live application integration check groups and 23 full-platform smoke checks. Browser observations verified the spatial delay scenario and reset. Commands, source hashes, scope and logs are recorded in `team/inkai/EVIDENCE.md` and `evidence/fresh-stack-acceptance.json`. Cold image downloads, exact judge-KVM startup and real-world operational validation remain unverified.
 
-Not implemented: optimization, D1/D2 curtailment policies, outages, individual wells, chemistry/transport, company telemetry, uncertainty forecasting or site calibration. The original Example Mine remains upstream reference only.
+Not implemented: optimization, D1/D2 curtailment policies, outages, individual wells, chemistry/transport, company telemetry, probabilistic uncertainty forecasting or site calibration. The original Example Mine remains upstream reference only.
 
 ## Data and Assumptions
 
@@ -65,7 +65,7 @@ Detailed parameter inventory/equations: `team/inkai/PARAMETERS.md`; executable v
 
 **Synthetic:** group identities/positions, nominal rates and uranium inventories, commissioning-only tanks, delivery amounts/dates, planned starts and selected delay. No real block measurements or 2023 operating baseline are claimed.
 
-**Assumptions:** B1/B2 whole doses MPP 120/150 t, Sat-1 100/130 t, Sat-2 140/160 t; initial stocks 100/80/110 t. Each area receives 300 t on day 3 and 120 t on day 60; only the first arrival moves. Acidification is planned on days 5/18, starts only with the whole dose, takes 7 days, then ramps over 7 days. Constant head grade is 100 mg U/L; starting model uranium is 180 nominal-rate days per group. Proportional flow curtailment enforces area IX capacity; recovered U queues at drying capacity. No toll processing is modelled. These block-level coefficients are not calibrated.
+**Assumptions:** B1/B2 whole doses MPP 120/150 t, Sat-1 100/130 t, Sat-2 140/160 t; initial stocks 100/80/110 t. Each area receives 300 t on day 3 and 120 t on day 60; only the first arrival moves. Acidification is planned on days 5/18, starts only with the whole dose, takes 7 days, then ramps over 7 days. Constant head grade is 100 mg U/L; starting model uranium is 180 nominal-rate days per group. Proportional flow curtailment enforces area IX capacity and shared drying/WIP headroom. The assumed end-of-day WIP target is one drying-capacity day (8.75 t U), an operating rule rather than measured storage. Withheld potential extraction remains in the model uranium inventory. Nominal potential rates are unchanged; actual rates are capacity-paced. No toll processing is modelled. These block-level coefficients are not calibrated.
 
 **Simulated outputs:** every displayed state, stock, flow, start date, product total, difference and trajectory. Acid/uranium conservation establishes internal consistency, not operational validation. The 2% unrecovered stream preserves mass accounting; it is not destroyed uranium. A product difference is horizon-dependent, not a permanent resource loss.
 
@@ -79,7 +79,7 @@ Only team-authored MIT code/configuration/geometry is redistributed. No company 
 
 ## Mine visualization
 
-`http://localhost:8088/`: three representative areas, nine groups, separate acid stocks, IX plants and shared drying/queue. Lifecycle colours and delayed-start outlines show consequences. Inspector, commissioning table, product projection and acid-stock chart all read platform state. Legend/disclosures distinguish public facts, synthetic inputs, assumptions, derived conversions and simulated outputs. Platform failure produces error/stale-state indication.
+`http://localhost:8088/`: three representative areas, nine groups, separate acid stocks, IX plants and shared drying/queue. Synthetic field footprints, symbolic well patterns, lifecycle colours, delayed-start outlines and live flow connections show consequences. Individual well symbols are not separate twins or measurements. Inspector, commissioning table, product/acid/WIP projections and the sensitivity grid all read platform state. Legend/disclosures distinguish public facts, synthetic inputs, assumptions, derived conversions and simulated outputs. Platform failure produces error/stale-state indication.
 
 ## Limitations
 
@@ -88,7 +88,8 @@ Only team-authored MIT code/configuration/geometry is redistributed. No company 
 - Commissioning-only acid boundary; no producing-group acid balance or acid-to-grade response.
 - Daily steps, fixed acidification/ramp and group order. Capacity limits extraction/processing, not administrative commissioning dates.
 - Annual-to-daily capacity approximation; constant recovery; no chemistry, transport, toll processing, energy or economics.
-- Sensitivity/operational validation is unfinished. Different assumptions or binding bottlenecks can change or mask product differences. No optimal schedule or general production-loss estimate is claimed.
+- The illustrative sensitivity grid is implemented; operational validation is not. In the 28-day exercise, 3–6 groups start late across this grid while the product difference spans −61.66 to 0 t U. Different assumptions or bottlenecks mask product effects. No optimal schedule, probability interval or general production-loss estimate is claimed.
+- The one-day WIP rule assumes immediate daily coordination of extraction and processing. Actual storage, hydraulic limits, flow-ramp constraints and control delays are unknown.
 - Local WSL differs from the official KVM judge; startup coverage is documented in `team/inkai/EVIDENCE.md`.
 
 ## Presentation

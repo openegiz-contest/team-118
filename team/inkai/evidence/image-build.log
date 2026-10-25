@@ -1,0 +1,47 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 329B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.12-slim
+#2 DONE 1.6s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B 0.0s done
+#3 DONE 0.0s
+
+#4 [1/6] FROM docker.io/library/python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c
+#4 resolve docker.io/library/python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 446.33kB 0.1s done
+#5 DONE 0.1s
+
+#6 [2/6] WORKDIR /app
+#6 CACHED
+
+#7 [3/6] COPY requirements.txt .
+#7 CACHED
+
+#8 [4/6] RUN pip install --no-cache-dir -r requirements.txt
+#8 CACHED
+
+#9 [5/6] COPY . /app/inkai
+#9 DONE 0.1s
+
+#10 [6/6] RUN useradd --uid 10001 --create-home minemind
+#10 DONE 0.4s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 0.2s done
+#11 exporting manifest sha256:28d3788e103ea8758e320cf574086011f5e30c15cbc31e43d890357db1412e73 0.0s done
+#11 exporting config sha256:b57d48d678fa25ab51adb46032888cba9bcaebc075d76bf3a5c0d4568f1a90c6 0.0s done
+#11 exporting attestation manifest sha256:1a89aa4c6faac2490533d3acbf555a8c4feb1916388eb86ccb783f22efed80c6 0.0s done
+#11 exporting manifest list sha256:b9bd856a81e6356454ab8e4476fad56c0cf1c69bcdc12f89cad1f255227ffc3e 0.0s done
+#11 naming to docker.io/minemind/inkai:verified-20261025
+#11 naming to docker.io/minemind/inkai:verified-20261025 done
+#11 unpacking to docker.io/minemind/inkai:verified-20261025 0.1s done
+#11 DONE 0.4s
